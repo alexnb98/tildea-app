@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
+import Game from "./pages/Game";
+import Tutorial from "./pages/Tutorial"
 
 class App extends Component {
   render() {
@@ -15,7 +17,9 @@ class App extends Component {
           <Navbar/>
           <Switch>
             <Route path="/" exact component={Landing} />
-            <Route path="/Dashboard/" component={Dashboard} />
+            <Route path="/dashboard/" component={Dashboard} />
+            <Route path="/game/" component={Game} />
+            <Route path="/tutorial/" component={Tutorial} />
           </Switch>
         </>
       </Router>
