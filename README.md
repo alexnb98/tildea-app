@@ -6,6 +6,8 @@ I made a Workflow guide on Notion, [check it out](https://www.notion.so/alexnb98
 
 Only use english inside the project!
 
+Wireframes and Flowcharts are made in whimsical.co 
+
 ## CSS & Styles
 
 We will use CSS Modules. There is no need to use SASS.
