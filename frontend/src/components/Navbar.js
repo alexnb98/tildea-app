@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => (
 
-    <div style={{"background-color": "lightblue"}}>
+    <div style={{"backgroundColor": "lightblue"}}>
       <ul>
         <li>
           <Link to="/dashboard">Dashboard</Link>
