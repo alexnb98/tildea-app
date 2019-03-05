@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const Game = () => (
     <div>
@@ -10,4 +10,4 @@ const Game = () => (
     </div>
 )
 
-export default Game
+export default Game;
