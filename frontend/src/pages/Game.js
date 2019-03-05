@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import data from '../assets/data/words.js';
-import Letter from './Letter';
+import data from '../assets/data/GameData';
+import Letter from '../components/Letter';
 
 class Game extends Component {
     constructor(props) {
@@ -19,11 +19,6 @@ class Game extends Component {
         if(className) {
             const oldClasses = props.target.className;
             props.target.className = oldClasses + " " + className;
-
-            // this.setState({
-            //     errors: 0,
-            //     progress: 1,
-            // })
         }
         console.log("this runs", className);
     }
