@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import data from '../assets/data/GameData';
 import Letter from '../components/Letter';
 
+
 class Game extends Component {
     constructor(props) {
         super(props);
