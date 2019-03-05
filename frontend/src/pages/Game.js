@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 
 const Game = () => (
     <p>Here comes the Game page</p>
 )
 
-export default Game
+export default Game;
