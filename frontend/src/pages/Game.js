@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import data from '../assets/data/GameData';
 import Letter from '../components/Letter';
+import styles from '../assets/css/Game.module.css';
 
 
 class Game extends Component {
@@ -16,7 +17,7 @@ class Game extends Component {
     }
 
     handleClick(props = "", args = "") {
-        const className = props.target.getAttribute('accent') === 'true' ? 'correct' : 'false';
+        const className = props.target.getAttribute('accent') === 'true' ? styles.correct : styles.false;
         if(className) {
             const oldClasses = props.target.className;
             props.target.className = oldClasses + " " + className;
@@ -43,8 +44,8 @@ class Game extends Component {
         })
 
         return (
-            <div className="accents-game">
-                <div className="accents-game__word">
+            <div className={styles.accentGame}>
+                <div className={styles.accentGameWord}>
                         {letters}
                 </div>
             </div>
