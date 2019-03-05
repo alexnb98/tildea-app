@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from '../assets/css/Letter.module.css';
+
 
 function Letter(props) {
     return (
-        <span className="letter" onClick={props.onClick} accent={props.accent}>
+        <span className={styles.letter} onClick={props.onClick} accent={props.accent}>
          {props.value} 
         </span>
     )
