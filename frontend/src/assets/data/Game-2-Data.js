@@ -1,5 +1,5 @@
 
-export const excercises = [
+export const exercise = [
     {
         phrase: "Vengo __ la casa de Lucía",
         correct: "de",
