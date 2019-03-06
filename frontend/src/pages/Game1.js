@@ -14,18 +14,25 @@ class Game extends Component {
         history: [],
     }
 
-    resetWord = (e) => {
-
+    resetWords = () => {
+        [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
+            c.classList.remove("bg-danger");
+            c.classList.remove("bg-success");
+        })
     }
 
     handleError = (e) => {
         const colorError = 'bg-danger';
         e.target.classList.add(colorError);
         const newErrors = this.state.errors + 1;
-        
-        console.log(this.state.history);
+        const newHistory = {
+            progress: this.state.progress,
+            word: this.state.words[this.state.progress],
+            errors: newErrors,
+        }
         this.setState({
             errors: newErrors,
+            history: newHistory,
         })
     }
     
@@ -33,31 +40,42 @@ class Game extends Component {
         e.persist();
         const colorSuccess = "bg-success";
         e.target.classList.add(colorSuccess);
+        const newProgress = this.state.progress + 1;
+        const newHistory = {
+            progress: newProgress,
+            word: this.state.words[this.state.progress],
+        }
+        
+        e.target.textContent = utils.addAccent(e.target.textContent);
         setTimeout(() => {
-            const newProgress = this.state.progress + 1;
             this.setState({
+                history: newHistory,
                 progress: newProgress,
             })
-        }, 300 );
-        console.log('loco')
+            this.resetWords();
+        }, 400);
     }
 
     render() {
         const {words} = this.state;
         let {progress} = this.state;
         const actualWord = words[progress] || "";
-        console.log(10 | 0);
 
         const letters = [...actualWord].map((c, i) => {
             if (i === utils.getAccentIndex(actualWord)) {
                 return (
-                    <Letter key={i} onClick={this.handleSuccess}>{c}</Letter>
+                    <Letter 
+                    key={i} 
+                    onClick={this.handleSuccess}
+                    >
+                    {utils.removeAccent(c)}
+                    </Letter>
                     )
-                }
+            }
                 
-                return (
-                    <Letter key={i} onClick={this.handleError}>{c}</Letter>
-                    )
+            return (
+                <Letter key={i} onClick={this.handleError}>{c}</Letter>
+            )
         })
                 
         return (
@@ -70,12 +88,7 @@ class Game extends Component {
                 </div>
                 <Score score={this.state.progress} mistakes={this.state.errors} wordsRemaining={this.state.words.length - this.state.progress}></Score>
                 <div className="container d-flex justify-content-around">
-                    {/* <button className="button button-success h-25 w-25">
-                        Last
-                        </button>
-                        <button className="button button-success h-25 w-25">
-                        Next
-                    </button> */}
+                    
                 </div>
             </div>
         </div>
