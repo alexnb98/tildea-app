@@ -5,7 +5,7 @@ import styles from '../assets/css/Letter.module.css';
 
 function Letter(props) {
     return (
-        <span className={styles.letter} onClick={props.onClick} accent={props.accent}>
+        <span className={`${styles.letter} display-1 display-sm-5 p-sm-2 p-0 text-center m-auto align-center`} onClick={props.onClick} accent={props.accent}>
          {props.value} 
         </span>
     )

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import data from '../assets/data/GameData';
 import Letter from '../components/Letter';
 import styles from '../assets/css/Game.module.css';
@@ -18,10 +18,9 @@ class Game extends Component {
 
     handleClick(props = "", args = "") {
         const colorOnClick = props.target.getAttribute('accent') === 'true' ? "bg-success" : "bg-danger";
-        if(colorOnClick) {
-            props.target.classList.add("colorOnClick");
+        if (colorOnClick) {
+            props.target.classList.add(colorOnClick);
         }
-        console.log("this runs", "colorOnClick");
     }
 
     render() {
@@ -30,10 +29,10 @@ class Game extends Component {
         const actualWord = words[progress];
         console.log(actualWord);
 
-        const letters = [...actualWord].map((c,i) => {
+        const letters = [...actualWord].map((c, i) => {
             let isCorrect = false;
 
-            if(i === utils.getAccentIndex(c)){
+            if (i === utils.getAccentIndex(actualWord)) {
                 isCorrect = true;
                 return (
                     <Letter key={i} value={c} onClick={this.handleClick} accent={isCorrect.toString()}></Letter>
@@ -49,8 +48,19 @@ class Game extends Component {
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
                 <div className={`${styles.accentGameWord} container py-5`}>
                     <h1>Game 1</h1>
-                    <div className="container">
+                    <div className="container d-flex justify-content-center align-items-center">
                         {letters}
+                    </div>
+                    <div className="container d-flex flex-row justify-content-around">
+                        <h2 className="text-success">Score: 
+                            <span className="h2">0</span>
+                        </h2>
+                        <h2 className="text-danger">Mistakes:
+                            <span className="h2">0</span>
+                        </h2>
+                        <h2 className="text-primary">Words remaining:
+                            <span className="h2">0</span>
+                        </h2>
                     </div>
                 </div>
             </div>
