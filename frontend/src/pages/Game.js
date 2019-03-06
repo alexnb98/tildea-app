@@ -17,7 +17,7 @@ class Game extends Component {
     }
 
     handleClick(props = "", args = "") {
-        const className = props.target.getAttribute('accent') === 'true' ? styles.correct : styles.false;
+        const className = props.target.getAttribute('accent') === 'true' ? "bg-success" : "bg-danger";
         if(className) {
             const oldClasses = props.target.className;
             props.target.className = oldClasses + " " + className;
@@ -47,7 +47,9 @@ class Game extends Component {
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
                 <div className={`${styles.accentGameWord} container py-5`}>
                     <h1>Game 1</h1>
-                    {letters}
+                    <div className="container">
+                        {letters}
+                    </div>
                 </div>
             </div>
         )
