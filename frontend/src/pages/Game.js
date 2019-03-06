@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import data from '../assets/data/GameData';
 import Letter from '../components/Letter';
 import styles from '../assets/css/Game.module.css';
+import utils from '../utils/utils';
 
 
 class Game extends Component {
@@ -10,34 +11,35 @@ class Game extends Component {
         this.state = {
             errors: 0,
             correct: 0,
-            withAccent: data.words.map(c => c.withAccent),
-            withNoAccent: data.words.map(c => c.withNoAccent),
+            words: data.words.slice(),
             progress: 0,
         }
     }
 
     handleClick(props = "", args = "") {
-        const className = props.target.getAttribute('accent') === 'true' ? "bg-success" : "bg-danger";
-        if(className) {
-            const oldClasses = props.target.className;
-            props.target.className = oldClasses + " " + className;
+        const colorOnClick = props.target.getAttribute('accent') === 'true' ? "bg-success" : "bg-danger";
+        if(colorOnClick) {
+            props.target.classList.add("colorOnClick");
         }
-        console.log("this runs", className);
+        console.log("this runs", "colorOnClick");
     }
 
     render() {
-        const withAccent = this.state.withAccent;
+        const words = this.state.words;
         const progress = this.state.progress;
-        const actualWord = withAccent[progress];
+        const actualWord = words[progress];
+        console.log(actualWord);
 
         const letters = [...actualWord].map((c,i) => {
             let isCorrect = false;
-            if(i === 9){
+
+            if(i === utils.getAccentIndex(c)){
                 isCorrect = true;
                 return (
                     <Letter key={i} value={c} onClick={this.handleClick} accent={isCorrect.toString()}></Letter>
                 )
             }
+
             return (
                 <Letter key={i} value={c} onClick={this.handleClick}></Letter>
             )

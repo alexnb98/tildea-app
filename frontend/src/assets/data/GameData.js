@@ -1,15 +1,11 @@
     
 export default {
     words: [
-        {
-            withAccent: "respiración",
-            withNoAccent: "respiracion",
-            index: 9
-        },
-        {
-            withAccent: "compilación",
-            withNoAccent: "compilacion",
-            index: 9
-        }
+        "respiración",
+        "compilación",
+        "retaliación",
+        "esdrújula",
+        "palíndromo",
+        "tándem",
     ]
 }
