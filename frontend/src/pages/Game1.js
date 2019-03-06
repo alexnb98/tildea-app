@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import data from '../assets/data/GameData';
+import data from '../assets/data/Game-1-Data';
 import Letter from '../components/Letter';
 import styles from '../assets/css/Game.module.css';
 import utils from '../utils/utils';
@@ -46,6 +46,7 @@ class Game extends Component {
         const {words} = this.state;
         let {progress} = this.state;
         const actualWord = words[progress] || "";
+        console.log(10 | 0);
 
         const letters = [...actualWord].map((c, i) => {
             if (i === utils.getAccentIndex(actualWord)) {
@@ -57,32 +58,28 @@ class Game extends Component {
                 return (
                     <Letter key={i} onClick={this.handleError}>{c}</Letter>
                     )
-                })
+        })
                 
-        if(actualWord) {
-            return (
-                <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
-                <div className={`${styles.accentGameWord} container py-5`}>
-                    <h1>Game 1: <span className="h2">Click the accent</span></h1>
+        return (
+            <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
+            <div className={`${styles.accentGameWord} container py-5`}>
+                <h1>Game 1: <span className="h2">Click the accent</span></h1>
 
-                    <div className="container d-flex justify-content-center align-items-center">
-                        {letters}
-                    </div>
-                    <Score score={this.state.progress} mistakes={this.state.errors} wordsRemaining={this.state.words.length - this.state.progress}></Score>
-                    <div className="container d-flex justify-content-around">
-                        {/* <button className="button button-success h-25 w-25">
-                            Last
-                            </button>
-                            <button className="button button-success h-25 w-25">
-                            Next
-                        </button> */}
-                    </div>
+                <div className="container d-flex justify-content-center align-items-center">
+                    {letters}
+                </div>
+                <Score score={this.state.progress} mistakes={this.state.errors} wordsRemaining={this.state.words.length - this.state.progress}></Score>
+                <div className="container d-flex justify-content-around">
+                    {/* <button className="button button-success h-25 w-25">
+                        Last
+                        </button>
+                        <button className="button button-success h-25 w-25">
+                        Next
+                    </button> */}
                 </div>
             </div>
-            )
-        } else {
-            //this is a change
-        }
+        </div>
+        )
     }
 }
 
