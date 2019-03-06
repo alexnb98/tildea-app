@@ -21,17 +21,17 @@ const Landing = (props) => (
                     <div className="col-md-8">
                         <button 
                             className="btn btn-danger mr-3"
-                            onClick={() => props.history.push("/game")}>
+                            onClick={() => props.history.push("/games")}>
                             1
                         </button>
                         <button 
                             className="btn btn-danger mr-3"
-                            onClick={() => props.history.push("/game")}>
+                            onClick={() => props.history.push("/games")}>
                             2
                         </button>
                         <button 
                             className="btn btn-danger mr-3"
-                            onClick={() => props.history.push("/game")}>
+                            onClick={() => props.history.push("/games")}>
                             3
                         </button>
                     </div>
