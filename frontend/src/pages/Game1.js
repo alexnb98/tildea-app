@@ -5,7 +5,7 @@ const Game1 = (props) => (
         <div className="jumbotron jumbotron-fluid text-center">
             <div className="container py-5">
                 <h1>Game 1</h1>
-                <h2>the route param is {props.match.params.id | "not here"}</h2>
+                <h2>the route param is {props.match.params.id || "not here"}</h2>
             </div>
         </div>
     </div>
