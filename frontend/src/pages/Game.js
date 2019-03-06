@@ -3,44 +3,45 @@ import data from '../assets/data/GameData';
 import Letter from '../components/Letter';
 import styles from '../assets/css/Game.module.css';
 import utils from '../utils/utils';
+import Score from '../components/Score';
 
 
 class Game extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            errors: 0,
-            correct: 0,
-            words: data.words.slice(),
-            progress: 0,
-        }
+    state = {
+        errors: 0,
+        words: data.words.slice(),
+        progress: 0,
+        history: [],
     }
 
-    handleClick(props = "", args = "") {
-        const colorOnClick = props.target.getAttribute('accent') === 'true' ? "bg-success" : "bg-danger";
-        if (colorOnClick) {
-            props.target.classList.add(colorOnClick);
-        }
+    handleError = (e) => {
+        const colorError = 'bg-danger';
+        e.target.classList.add(colorError);
+    }
+    
+    handleSuccess = (e) => {
+        const colorSuccess = "bg-success";
+        const successes = this.state.progress + 1;
+        e.target.classList.add(colorSuccess);
+        this.setState({
+            progress: successes,
+        })
     }
 
     render() {
-        const words = this.state.words;
-        const progress = this.state.progress;
+        const {words} = this.state;
+        let {progress} = this.state;
         const actualWord = words[progress];
-        console.log(actualWord);
 
         const letters = [...actualWord].map((c, i) => {
-            let isCorrect = false;
-
             if (i === utils.getAccentIndex(actualWord)) {
-                isCorrect = true;
                 return (
-                    <Letter key={i} value={c} onClick={this.handleClick} accent={isCorrect.toString()}></Letter>
+                    <Letter key={i} onClick={this.handleSuccess}>{c}</Letter>
                 )
             }
 
             return (
-                <Letter key={i} value={c} onClick={this.handleClick}></Letter>
+                <Letter key={i} onClick={this.handleError}>{c}</Letter>
             )
         })
 
@@ -51,16 +52,14 @@ class Game extends Component {
                     <div className="container d-flex justify-content-center align-items-center">
                         {letters}
                     </div>
-                    <div className="container d-flex flex-row justify-content-around">
-                        <h2 className="text-success">Score: 
-                            <span className="h2">0</span>
-                        </h2>
-                        <h2 className="text-danger">Mistakes:
-                            <span className="h2">0</span>
-                        </h2>
-                        <h2 className="text-primary">Words remaining:
-                            <span className="h2">0</span>
-                        </h2>
+                    <Score score={this.state.progress} mistakes={this.state.errors} wordsRemaining={this.state.words.length - this.state.progress}></Score>
+                    <div className="container d-flex justify-content-around">
+                        <button className="button button-success h-25 w-25">
+                            Next
+                        </button>
+                        <button className="button button-success h-25 w-25">
+                            Last
+                        </button>
                     </div>
                 </div>
             </div>
