@@ -1,21 +1,44 @@
-export default {
+const utils = {
+
+    hasAccent: letter => {
+        switch(letter.charCodeAt(0)) {
+            case 193:
+            case 201:
+            case 205:
+            case 211:
+            case 218:
+            case 225:
+            case 233:
+            case 237:
+            case 243: 
+            case 250:
+                return true;
+            default: 
+                return false;
+        }
+    },
+
+    toggleAccent: (letter) => {
+        if(this.hasAccent(letter)) {
+            
+        }
+    },
     
     getAccentIndex(word) {
-        if(!word) return 0;
-        const accents = ["Á","É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"];
+        if(!word) return null;
         for(let i = 0; i < word.length; i++) 
-            if(accents.indexOf(word[i]) !== -1) return i;
+            if(this.hasAccent(word[i])) 
+                return i;
         
         return -1;
     },
-    
+
     removeAccent(word) {
-        if(!word) return 0;
+        if(!word) return null;
         const vocals = ["A", "E", "I", "O", "U", "a", "e", "i", "o", "u"];
-        const accents = ["Á","É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"];
-        for(let i = 0; i < accents.length; i++) 
-            if(word.indexOf(accents[i]) !== -1)
-                return word.replace(accents[i], vocals[i]);
+        for(let i = 0; i < word.length; i++) 
+            if(this.hasAccent(word[i]))
+                return "abc";
         
         return word;
     },
@@ -32,7 +55,7 @@ export default {
                 result = accents[i];
             }
         return result || letter;
-
-        
     }
 }
+
+export default utils;

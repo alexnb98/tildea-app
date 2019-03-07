@@ -61,6 +61,19 @@ class Game extends Component {
         let {progress} = this.state;
         const actualWord = words[progress] || "";
 
+        const letterCodes = (function hellou(){
+            let result = {};
+            const vocals = ["A", "E", "I", "O", "U", "a", "e", "i", "o", "u"];
+            const accents = ["Á","É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"];
+            for(let i = 0; i < vocals.length; i++) {
+                console.log([utils.hasAccent(accents[i])]);
+                result[vocals[i]] = {normal: vocals[i].charCodeAt(0), withAccent: accents[i].charCodeAt(0)};
+            }
+            return result;
+        })()
+
+        console.log(letterCodes);
+
         const letters = [...actualWord].map((c, i) => {
             if (i === utils.getAccentIndex(actualWord)) {
                 return (
