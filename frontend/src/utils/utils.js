@@ -18,6 +18,26 @@ const utils = {
         }
     },
 
+    getLetterUnaccentedCounterpart: letter => {
+        switch(letter.charCodeAt(0)) {
+            case 65:
+                return String.fromCharCode(193);
+            case 69:
+            case 73:
+            case 79:
+            case 85:
+            case 97:
+            case 101:
+            case 105:
+            case 111:
+            case 117:
+                break;
+            default: 
+                return null;
+
+        }
+    },
+
     toggleAccent: (letter) => {
         if(this.hasAccent(letter)) {
             

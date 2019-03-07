@@ -67,6 +67,7 @@ class Game extends Component {
             const accents = ["Á","É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"];
             for(let i = 0; i < vocals.length; i++) {
                 console.log([utils.hasAccent(accents[i])]);
+                console.log([utils.getLetterUnaccentedCounterpart(vocals[i])]);
                 result[vocals[i]] = {normal: vocals[i].charCodeAt(0), withAccent: accents[i].charCodeAt(0)};
             }
             return result;
