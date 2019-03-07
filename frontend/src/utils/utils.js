@@ -23,7 +23,7 @@ const utils = {
             case 250:
                 return String.fromCharCode(117);
             default: 
-                return null;
+                return letter;
 
         }
     },
@@ -51,7 +51,7 @@ const utils = {
             case 117:
                 return String.fromCharCode(250);
             default: 
-                return null;
+                return letter;
         }
     },
 

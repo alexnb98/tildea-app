@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 // TODO update hard coded routes
 
 const GameFeedback = (props) => {
+    const gameId = 1;
+
     if(props.end) {
         return (
             <div className="container d-flex flex-column text-left">
@@ -12,9 +14,7 @@ const GameFeedback = (props) => {
                     <h2 className="mb-5">Mistakes: {props.mistakes}</h2>
                 </div>
                 <div className="container flex-column text-center">
-                    <ul className="list-group">
-                        <li className="list-group-item">{props.wordsRecap}</li>
-                    </ul>
+                    {props.children}
                 </div>
 
                 <div className="d-flex justify-content-around mt-5">
@@ -22,7 +22,7 @@ const GameFeedback = (props) => {
                         <Link to="/" className="text-white">Next Level</Link>
                     </button>
                     <button className="btn btn-primary">
-                        <Link to="/game/:id" className="text-white">Try Again</Link>
+                        <Link to={"game1" + gameId} className="text-white">Try Again</Link>
                     </button>
                     <button className="btn btn-danger">
                         <Link to="/dashboard" className="text-white">Go To Dashboard</Link>
