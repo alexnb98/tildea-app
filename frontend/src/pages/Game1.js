@@ -39,41 +39,28 @@ class Game extends Component {
     handleSuccess = (e) => {
         e.persist();
         const colorSuccess = "bg-success";
-        e.target.classList.add(colorSuccess);
         const newProgress = this.state.progress + 1;
         const newHistory = {
             progress: newProgress,
             word: this.state.words[this.state.progress],
         }
         
-        e.target.textContent = utils.addAccent(e.target.textContent);
+        e.target.classList.add(colorSuccess);
+        e.target.textContent = utils.toggleAccent(e.target.textContent);
         setTimeout(() => {
+            this.resetWords();
             this.setState({
                 history: newHistory,
                 progress: newProgress,
             })
-            this.resetWords();
-        }, 400);
+            e.target.textContent = utils.toggleAccent(e.target.textContent);
+        }, 500);
     }
 
     render() {
         const {words} = this.state;
         let {progress} = this.state;
         const actualWord = words[progress] || "";
-
-        const letterCodes = (function hellou(){
-            let result = {};
-            const vocals = ["A", "E", "I", "O", "U", "a", "e", "i", "o", "u"];
-            const accents = ["Á","É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"];
-            for(let i = 0; i < vocals.length; i++) {
-                console.log([utils.hasAccent(accents[i])]);
-                console.log([utils.getLetterUnaccentedCounterpart(vocals[i])]);
-                result[vocals[i]] = {normal: vocals[i].charCodeAt(0), withAccent: accents[i].charCodeAt(0)};
-            }
-            return result;
-        })()
-
-        console.log(letterCodes);
 
         const letters = [...actualWord].map((c, i) => {
             if (i === utils.getAccentIndex(actualWord)) {
