@@ -13,7 +13,6 @@ class Game extends Component {
         errors: 0,
         words: data.words.slice(),
         progress: 0,
-        history: [],
         lettersHistory: [],
         end: false
     }
@@ -29,14 +28,8 @@ class Game extends Component {
         const colorError = 'bg-danger';
         e.target.classList.add(colorError);
         const newErrors = this.state.errors + 1;
-        const newHistory = {
-            progress: this.state.progress,
-            word: this.state.words[this.state.progress],
-            errors: newErrors,
-        }
         this.setState({
             errors: newErrors,
-            history: newHistory,
         })
     }
     
@@ -58,10 +51,10 @@ class Game extends Component {
         
         setTimeout(() => {
             const actualWord = [].slice.call(document.querySelectorAll('#letter'))
-            console.log("handle success " + actualWord.map(c => c.textContent));
+
             this.setState(state => {
+
                 const lettersHistory = state.lettersHistory.concat([actualWord]);
-                console.log("letters success " + lettersHistory.map(c => c.map(c => c.textContent)));
                 
                 return {
                     history: newHistory,
