@@ -7,9 +7,9 @@ import Score from '../components/Score';
 import GameFeedback from '../components/Game1Feedback';
 import FeedbackWord from '../components/FeedbackWord';
 import FeedbackLetter from '../components/FeedbackLetter';
-import FeedbackList from '../components/FeedbackList';
 
-
+const colorError = 'bg-danger';
+const colorSuccess = "bg-success";
 class Game extends Component {
     state = {
         errors: 0,
@@ -22,13 +22,12 @@ class Game extends Component {
     
     resetWords = () => {
         [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
-            c.classList.remove("bg-danger");
-            c.classList.remove("bg-success");
+            c.classList.remove(colorError);
+            c.classList.remove(colorSuccess);
         })
     }
     
     handleError = (e, i) => {
-        const colorError = 'bg-danger';
         e.target.classList.add(colorError);
         const sortedErrors = this.state.errorHistory.concat(i);
         sortedErrors.sort((a,b) => b-a);
@@ -46,7 +45,6 @@ class Game extends Component {
     
     handleSuccess = (e,i) => {
         e.persist();
-        const colorSuccess = "bg-success";
         e.target.classList.add(colorSuccess);
         this.toggleThisWordsAccent(e);
         const sortedErrors = this.state.errorHistory;
@@ -78,14 +76,14 @@ class Game extends Component {
         const wordArray = word.split("").map((c, i) => {
             if(i === this.state.lettersHistory[letterIndex].correctLetter) {
                 return (
-                    <FeedbackLetter key={c + i} className="bg-success">
+                    <FeedbackLetter key={c + i} className={colorSuccess}>
                         {c}
                     </FeedbackLetter>
                 )
             } else if(i === errorsArrayCopy[errorsArrayCopy.length -1] && errorsArrayCopy.length !== 0) {
                 errorsArrayCopy.pop();
                 return (
-                    <FeedbackLetter key={c + i} className="bg-danger">
+                    <FeedbackLetter key={c + i} className={colorError}>
                         {c}
                     </FeedbackLetter>
                 )
@@ -138,7 +136,7 @@ class Game extends Component {
         const gameTitle = this.state.end ? 
         "Congratulations! You completed the level!" : 
         "Click the words that should be accented";
-        
+
         const feedback = this.state.end ?  
             <GameFeedback 
                     end={this.state.end} 
@@ -154,12 +152,8 @@ class Game extends Component {
                 <div className={`${styles.accentGameWord} container py-5`}>
                     <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
                     <div className="container d-flex justify-content-center align-items-center">
-
                         {letters}
-
                         {feedback}
-
-
                     </div>
                     <Score 
                     end={this.state.end} 
