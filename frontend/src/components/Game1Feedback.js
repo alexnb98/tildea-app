@@ -1,8 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
 
-// TODO update hard coded routes
-
 const GameFeedback = (props) => {
     return (
         <div className="container d-flex flex-column text-left">
@@ -10,10 +8,9 @@ const GameFeedback = (props) => {
                 <h2>Score: {props.score}</h2>
                 <h2 className="mb-5">Mistakes: {props.mistakes}</h2>
             </div>
-            <div className="container flex-column text-center">
+            <div className="container d-flex flex-column">
                 {props.children}
             </div>
-
             <div className="d-flex justify-content-around mt-5">
                 <button className="btn btn-success">
                     <Link to="/" className="text-white">Next Level</Link>

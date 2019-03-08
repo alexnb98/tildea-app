@@ -2,9 +2,9 @@ import React from 'react';
 
 const FeedbackWord = props => {
     return (
-        <li className={props.className + " display-5 list-group-item d-inline"}>
+        <ul className="list-group d-flex flex-row mb-3">
                 {props.children}
-        </li>
+        </ul>
     )
 }
 
