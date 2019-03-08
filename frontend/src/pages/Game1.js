@@ -32,11 +32,9 @@ class Game extends Component {
         e.target.classList.add(colorError);
         const sortedErrors = this.state.errorHistory.concat(i);
         sortedErrors.sort((a,b) => b-a);
-        this.setState(state => {
-            return {
-                errors: state.errors + 1,
+        this.setState({
+                errors: this.state.errors + 1,
                 errorHistory: sortedErrors,
-            }
         })
     }
 
@@ -50,16 +48,15 @@ class Game extends Component {
         this.toggleThisWordsAccent(e);
         const sortedErrors = this.state.errorHistory;
         sortedErrors.sort((a,b) => b-a);
+        const newLettersHistoryItem = this.state.lettersHistory.concat({
+            correctLetter: i,
+            errors: sortedErrors,
+        });
         setTimeout(() => {
-            this.setState(state => {
-                return {
-                    progress: state.progress + 1,
-                    lettersHistory: state.lettersHistory.concat({
-                        correctLetter: i,
-                        errors: sortedErrors,
-                    }),
-                    errorHistory: [],
-                }
+            this.setState({
+                progress: this.state.progress + 1,
+                lettersHistory: newLettersHistoryItem,
+                errorHistory: [],
             })
             if(this.state.progress === this.state.words.length) {
                 this.setState({
