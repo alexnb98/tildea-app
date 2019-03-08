@@ -14,6 +14,7 @@ class Game extends Component {
         words: data.words.slice(),
         progress: 0,
         lettersHistory: [],
+        errorHistory: [],
         end: false
     }
 
@@ -24,42 +25,33 @@ class Game extends Component {
         })
     }
 
-    handleError = (e) => {
+    handleError = (e, i) => {
         const colorError = 'bg-danger';
         e.target.classList.add(colorError);
-        const newErrors = this.state.errors + 1;
-        this.setState({
-            errors: newErrors,
+
+        this.setState((state, props) => {
+            return {
+                errors: state.errors + 1,
+                errorHistory: state.errorHistory.concat(i),
+            }
         })
     }
     
-    handleSuccess = (e) => {
+    handleSuccess = (e,i) => {
         e.persist();
         const colorSuccess = "bg-success";
-        const newProgress = this.state.progress + 1;
-        ;
-        const newHistory = {
-            progress: newProgress,
-            word: this.state.words[this.state.progress],
-        }
-        
-        
-        
         e.target.classList.add(colorSuccess);
         e.target.textContent = utils.toggleAccent(e.target.textContent);
-        
-        
+
         setTimeout(() => {
-            const actualWord = [].slice.call(document.querySelectorAll('#letter'))
-
-            this.setState(state => {
-
-                const lettersHistory = state.lettersHistory.concat([actualWord]);
-                
+            this.setState((state,props) => {
+                console.log(props);
                 return {
-                    history: newHistory,
-                    progress: newProgress,
-                    lettersHistory,
+                    progress: state.progress + 1,
+                    lettersHistory: state.lettersHistory.concat({
+                        correctLetter: i,
+                        errors: state.errorHistory,
+                    })
                 }
             })
             this.resetWords();
@@ -70,28 +62,49 @@ class Game extends Component {
                     end: true,
                 })
             }
+            
+            console.log(this.state);
+
         }, 400);
     }
 
-    renderWordList() {
-        return this.state.lettersHistory.map((ulElement,i) => {
-            return (
-                <ul className="list-group d-flex flex-row" key={i}>
-                    {
-                        ulElement.map((listElement, j) => {
-                            const classes = listElement.className.split(" ").filter(letter => {
-                                return letter === "bg-success" || letter === "bg-danger"
-                            })
+    // renderWordList() {
+    //     return this.state.lettersHistory.map((ulElement,i) => {
+    //         return (
+    //             <ul className="list-group d-flex flex-row" key={i}>
+    //                 {
+    //                     ulElement.map((listElement, j) => {
+    //                         const classes = listElement.className.split(" ").filter(letter => {
+    //                             return letter === "bg-success" || letter === "bg-danger"
+    //                         })
 
-                            return (
-                                <FeedbackWord className={classes.join(" ")} key={String.fromCharCode(j)}>
-                                    {listElement.textContent}
-                                </FeedbackWord>
-                            )
-                        })
-                    }
-                </ul>
-            );
+    //                         return (
+    //                             <FeedbackWord className={classes.join(" ")} key={String.fromCharCode(j)}>
+    //                                 {listElement.textContent}
+    //                             </FeedbackWord>
+    //                         )
+    //                     })
+    //                 }
+    //             </ul>
+    //         );
+    //     })
+    // }
+
+    renderLetters(word) {
+        return [...word].map((c, i) => {
+            if (i === utils.getAccentIndex(word)) {
+                return (
+                    <Letter 
+                    key={i} 
+                    onClick={(e) => {this.handleSuccess(e,i)}}
+                    >
+                        {utils.removeAccent(c)}
+                    </Letter>
+                    )
+            }
+            return (
+                <Letter key={i} onClick={(e) => {this.handleError(e,i)}}>{c}</Letter>
+            )
         })
     }
 
@@ -100,28 +113,11 @@ class Game extends Component {
         let {progress} = this.state;
         const actualWord = words[progress] || "";
 
-        const letters = [...actualWord].map((c, i) => {
-            if (i === utils.getAccentIndex(actualWord)) {
-                return (
-                    <Letter 
-                    key={i} 
-                    onClick={this.handleSuccess}
-                    >
-                    {utils.removeAccent(c)}
-                    </Letter>
-                    )
-            }
-                
-            return (
-                <Letter key={i} onClick={this.handleError}>{c}</Letter>
-            )
-        })
+        const letters = this.renderLetters(actualWord);
 
         const feedback = this.state.end ? "Congratulations! You completed the level!" : "Click the words that should be accented";
 
-        const wordList = this.renderWordList();
-
-        // TODO: change hard-coded true to dynamic true on GameFeedback and Score Components 
+        // const wordList = this.renderWordList(); 
                 
         return (
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
@@ -134,7 +130,7 @@ class Game extends Component {
                         score={this.state.progress || 0} 
                         mistakes={this.state.errors || 0}
                         >
-                        {wordList}
+                        {/* {wordList} */}
                         </GameFeedback>
                     </div>
                     <Score 
