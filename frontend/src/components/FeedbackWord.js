@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const FeedbackWord = props => {
     return (
@@ -6,6 +7,10 @@ const FeedbackWord = props => {
                 {props.children}
         </ul>
     )
+}
+
+FeedbackWord.propTypes = {
+    children: PropTypes.array,
 }
 
 export default FeedbackWord;

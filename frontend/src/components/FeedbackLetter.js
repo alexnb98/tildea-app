@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 const FeedbackLetter = props => {
     return (
@@ -6,6 +7,11 @@ const FeedbackLetter = props => {
                 {props.children}
         </li>
     )
+}
+
+FeedbackLetter.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.string,
 }
 
 export default FeedbackLetter;

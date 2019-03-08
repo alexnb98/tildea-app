@@ -8,19 +8,20 @@ import GameFeedback from '../components/Game1Feedback';
 import FeedbackWord from '../components/FeedbackWord';
 import FeedbackLetter from '../components/FeedbackLetter';
 
-const colorError = 'bg-danger';
-const colorSuccess = "bg-success";
+//variables for controlling color change, just bootstrap classes for now, they could also be implemented as dynamic css classes;
+const colorError = 'bg-danger' || styles.letterDanger; //not implemented yet
+const colorSuccess = "bg-success" || styles.letterSuccess; //not implemented yet
 class Game extends Component {
     state = {
         errors: 0,
-        words: data.words.slice(),
         progress: 0,
         lettersHistory: [],
         errorHistory: [],
-        end: false
+        isGameFinished: false,
+        words: data.words.slice(),
     }
     
-    resetWords = () => {
+    resetWordColors(){
         [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
             c.classList.remove(colorError);
             c.classList.remove(colorSuccess);
@@ -62,16 +63,15 @@ class Game extends Component {
             })
             if(this.state.progress === this.state.words.length) {
                 this.setState({
-                    end: true,
+                    isGameFinished: true,
                 })
             }
-            
-            this.resetWords();
+            this.resetWordColors();
             this.toggleThisWordsAccent(e);
         }, 400);
     }
 
-    renderFeedbackLetters(word, letterIndex) {
+    renderFeedbackLetters(word = "", letterIndex = 0) {
         const errorsArrayCopy = this.state.lettersHistory[letterIndex].errors;
         const wordArray = word.split("").map((c, i) => {
             if(i === this.state.lettersHistory[letterIndex].correctLetter) {
@@ -127,26 +127,37 @@ class Game extends Component {
 
 
     render() {
-        const {words} = this.state;
-        let {progress} = this.state;
+        //Variables
+        const {words, progress, isGameFinished, errors} = this.state;
         const actualWord = words[progress];
-
         const letters = this.renderLetters(actualWord);
+        const gameId = 1;
 
-        const gameTitle = this.state.end ? 
+        //conditional variables
+        const gameTitle = isGameFinished ? 
         "Congratulations! You completed the level!" : 
         "Click the words that should be accented";
 
-        const feedback = this.state.end ?  
-            <GameFeedback 
-                    end={this.state.end} 
-                    score={this.state.progress || 0} 
-                    mistakes={this.state.errors || 0}
-                    >
-                    {this.renderWord(this.state.words)}
-            </GameFeedback> :
-        null;
+        const feedback = isGameFinished ?  
+                        <GameFeedback 
+                        gameId={gameId}
+                        score={progress || 0} 
+                        mistakes={errors || 0}
+                        >
+                        {this.renderWord(words)}
+                        </GameFeedback> 
+                        :
+                        null;
 
+        const scoreBoard = !isGameFinished ?
+                            <Score 
+                            score={progress} 
+                            mistakes={errors} 
+                            wordsRemaining={words.length - progress}
+                            >
+                            </Score> 
+                            :
+                            null;
         return (
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
                 <div className={`${styles.accentGameWord} container py-5`}>
@@ -155,13 +166,7 @@ class Game extends Component {
                         {letters}
                         {feedback}
                     </div>
-                    <Score 
-                    end={this.state.end} 
-                    score={this.state.progress} 
-                    mistakes={this.state.errors} 
-                    wordsRemaining={this.state.words.length - this.state.progress}
-                    >
-                    </Score>
+                    {scoreBoard}
                 </div>
             </div>
         )

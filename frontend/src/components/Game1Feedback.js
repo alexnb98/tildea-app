@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const GameFeedback = (props) => {
     return (
@@ -16,7 +17,7 @@ const GameFeedback = (props) => {
                     <Link to="/" className="text-white">Next Level</Link>
                 </button>
                 <button className="btn btn-primary">
-                    <Link to={"/game1" + props.gameId} className="text-white">Try Again</Link>
+                    <Link to={"/game1/" + props.gameId} className="text-white">Try Again</Link>
                 </button>
                 <button className="btn btn-danger">
                     <Link to="/dashboard" className="text-white">Go To Dashboard</Link>
@@ -24,6 +25,12 @@ const GameFeedback = (props) => {
             </div>
         </div>
     )
+}
+
+GameFeedback.propTypes = {
+    gameId: PropTypes.number,
+    score: PropTypes.number,
+    mistakes: PropTypes.number,
 }
 
 export default GameFeedback;
