@@ -11,6 +11,7 @@ import FeedbackLetter from '../components/FeedbackLetter';
 //variables for controlling color change, just bootstrap classes for now, they could also be implemented as dynamic css classes;
 const colorError = 'bg-danger' || styles.letterDanger; //not implemented yet
 const colorSuccess = "bg-success" || styles.letterSuccess; //not implemented yet
+const LetterClassName = "display-1 display-sm-5";
 class Game extends Component {
     state = {
         errors: 0,
@@ -109,7 +110,7 @@ class Game extends Component {
             if (i === utils.getAccentIndex(word)) {
                 return (
                     <Letter 
-                    key={i} 
+                    key={i} className={LetterClassName}
                     onClick={(e) => {this.handleSuccess(e,i)}}
                     >
                         {utils.removeAccent(c)}
@@ -117,11 +118,16 @@ class Game extends Component {
                     )
             }
             return (
-                <Letter key={i} onClick={(e) => {this.handleError(e,i)}}>{c}</Letter>
+                <Letter 
+                    key={i} 
+                    onClick={(e) => {this.handleError(e,i)}}
+                    className={LetterClassName}
+                    >
+                        {c}
+                </Letter>
             )
         })
     }
-
 
     render() {
         //Variables
@@ -134,36 +140,18 @@ class Game extends Component {
         const gameTitle = isGameFinished ? 
         "Congratulations! You completed the level!" : 
         "Click the words that should be accented";
-
-        const feedback = isGameFinished ?  
-                        <GameFeedback 
-                        gameId={gameId}
-                        score={progress || 0} 
-                        mistakes={errors || 0}
-                        >
-                        {this.renderWord(words)}
-                        </GameFeedback> 
-                        :
-                        null;
-
-        const scoreBoard = !isGameFinished ?
-                            <Score 
-                            score={progress} 
-                            mistakes={errors} 
-                            wordsRemaining={words.length - progress}
-                            >
-                            </Score> 
-                            :
-                            null;
+        
         return (
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
                 <div className={`${styles.accentGameWord} container py-5`}>
                     <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
                     <div className="container d-flex justify-content-center align-items-center">
                         {letters}
-                        {feedback}
+                        {isGameFinished ?  
+                        <GameFeedback gameId={gameId} score={progress || 0} mistakes={errors || 0}>{this.renderWord(words)}</GameFeedback> :null}
                     </div>
-                    {scoreBoard}
+                    {!isGameFinished ? <Score score={progress} mistakes={errors} wordsRemaining={words.length - progress}></Score> :
+                    null}
                 </div>
             </div>
         )
