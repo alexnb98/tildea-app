@@ -4,9 +4,9 @@ import Option from '../components/Option';
 
 const EasyBoard = props => {
     const i = Math.floor(Math.random() * (props.option.length));
-    const j = i === 0 ? i + 1 : i - 1;
-    const isICorrect = (i === 0 ? true : false).toString();
-    const isJCorrect = (j === 0 ? true : false).toString();
+    const j = i === 0 ? 1 : 0;
+    const isICorrect = (i === 0 ? true : false);
+    const isJCorrect = !isICorrect;
 
     return (
             <div className="row py-4 my-4">
@@ -14,7 +14,6 @@ const EasyBoard = props => {
                     <Option 
                     option={props.option[i]}
                     click={isICorrect ? props.handleSuccess : props.handleError}
-                    correct={isICorrect}
                     >
                     </Option>
                 </div>
@@ -22,7 +21,6 @@ const EasyBoard = props => {
                     <Option 
                     option={props.option[j]}
                     click={isJCorrect ? props.handleSuccess : props.handleError}
-                    correct={isJCorrect}
                     >
                     </Option>
                 </div>
