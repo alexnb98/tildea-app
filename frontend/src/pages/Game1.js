@@ -4,7 +4,7 @@ import Letter from '../components/Letter';
 import styles from '../assets/css/Game.module.css';
 import utils from '../utils/utils';
 import Score from '../components/Score';
-import GameFeedback from '../components/Game1Feedback';
+import GameFeedback from '../components/ScoreBoard';
 import FeedbackWord from '../components/FeedbackWord';
 import FeedbackLetter from '../components/FeedbackLetter';
 
@@ -72,13 +72,18 @@ class Game extends Component {
     renderFeedbackLetters(word = "", letterIndex = 0) {
         const errorsArrayCopy = this.state.lettersHistory[letterIndex].errors;
         const wordArray = word.split("").map((c, i) => {
-            if(i === this.state.lettersHistory[letterIndex].correctLetter) {
+            if(
+                i === this.state.lettersHistory[letterIndex].correctLetter
+            ) {
                 return (
                     <FeedbackLetter key={c + i} className={colorSuccess}>
                         {c}
                     </FeedbackLetter>
                 )
-            } else if(i === errorsArrayCopy[errorsArrayCopy.length -1] && errorsArrayCopy.length !== 0) {
+            } else if(
+                i === errorsArrayCopy[errorsArrayCopy.length -1] &&
+                errorsArrayCopy.length !== 0
+            ) {
                 errorsArrayCopy.pop();
                 return (
                     <FeedbackLetter key={c + i} className={colorError}>
@@ -140,7 +145,7 @@ class Game extends Component {
         const gameTitle = isGameFinished ? 
         "Congratulations! You completed the level!" : 
         "Click the words that should be accented";
-        
+
         return (
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
                 <div className={`${styles.accentGameWord} container py-5`}>
