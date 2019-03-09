@@ -14,12 +14,12 @@ const FeedbackWord = props => {
             style = {backgroundColor: "green"}
         }
         return (
-            <p style={style} key={i}>{letter}</p>    
+            <span className="px-3 pt-1 pb-3 rounded mx-1 d-inline-block display-4" style={style} key={i}>{letter}</span>    
         )
     })
 
     return (
-        <div>
+        <div className="my-3 h-100">
             {separatedLetter}
         </div>
     )
