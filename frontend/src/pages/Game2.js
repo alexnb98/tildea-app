@@ -63,9 +63,7 @@ class Game2 extends Component {
 
     buttonClassRemove = (className) => {
       const element = document.querySelector('button.' + className);
-      if (element) {
-        element.classList.remove(className);
-      }
+      if (element) element.classList.remove(className);
     }
     
     render() {
