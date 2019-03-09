@@ -4,9 +4,7 @@ import Letter from '../components/Letter';
 import styles from '../assets/css/Game.module.css';
 import utils from '../utils/utils';
 import Score from '../components/Score';
-import GameFeedback from '../components/Game1Feedback';
-import FeedbackWord from '../components/FeedbackWord';
-import FeedbackLetter from '../components/FeedbackLetter';
+import GameFeedback from "../components/Game1Feedback";
 
 //variables for controlling color change, just bootstrap classes for now, they could also be implemented as dynamic css classes;
 const colorError = 'bg-danger' || styles.letterDanger; //not implemented yet
@@ -15,10 +13,9 @@ class Game extends Component {
     state = {
         errors: 0,
         progress: 0,
-        lettersHistory: [],
-        errorHistory: [],
         isGameFinished: false,
         words: data.words.slice(),
+        GameHistory: [],
     }
     
     resetWordColors(){
@@ -27,36 +24,34 @@ class Game extends Component {
             c.classList.remove(colorSuccess);
         })
     }
-    
-    handleError = (e, i) => {
-        e.target.classList.add(colorError);
-        const sortedErrors = this.state.errorHistory.concat(i);
-        sortedErrors.sort((a,b) => b-a);
-        this.setState({
-                errors: this.state.errors + 1,
-                errorHistory: sortedErrors,
-        })
-    }
-
     toggleThisWordsAccent(e) {
         e.target.textContent = utils.toggleAccent(e.target.textContent);
     }
     
+    
+    handleError = (e, i) => {
+        e.target.classList.add(colorError);
+        let letter = e.target.textContent;
+        this.setState({
+                errors: this.state.errors + 1,
+                GameHistory: [...this.state.GameHistory, letter],
+        })
+    }
+
     handleSuccess = (e,i) => {
+        const {progress, GameHistory} = this.state
         e.persist();
         e.target.classList.add(colorSuccess);
         this.toggleThisWordsAccent(e);
-        const sortedErrors = this.state.errorHistory;
-        sortedErrors.sort((a,b) => b-a);
-        const newLettersHistoryItem = this.state.lettersHistory.concat({
-            correctLetter: i,
-            errors: sortedErrors,
-        });
+        //the simbol % is used in the Game feedback component to
+        //separate the history for each word
+        let actualHistory = this.state.GameHistory;
+        console.log(actualHistory)
+        let letter = e.target.textContent;
         setTimeout(() => {
             this.setState({
-                progress: this.state.progress + 1,
-                lettersHistory: newLettersHistoryItem,
-                errorHistory: [],
+                progress: progress + 1,
+                GameHistory: [...this.state.GameHistory, letter, " "],
             })
             if(this.state.progress === this.state.words.length) {
                 this.setState({
@@ -66,42 +61,6 @@ class Game extends Component {
             this.resetWordColors();
             this.toggleThisWordsAccent(e);
         }, 400);
-    }
-
-    renderFeedbackLetters(word = "", letterIndex = 0) {
-        const errorsArrayCopy = this.state.lettersHistory[letterIndex].errors;
-        const wordArray = word.split("").map((c, i) => {
-            if(i === this.state.lettersHistory[letterIndex].correctLetter) {
-                return (
-                    <FeedbackLetter key={c + i} className={colorSuccess}>
-                        {c}
-                    </FeedbackLetter>
-                )
-            } else if(i === errorsArrayCopy[errorsArrayCopy.length -1] && errorsArrayCopy.length !== 0) {
-                errorsArrayCopy.pop();
-                return (
-                    <FeedbackLetter key={c + i} className={colorError}>
-                        {c}
-                    </FeedbackLetter>
-                )
-            }
-            return(
-                <FeedbackLetter key={c + i}>
-                    {c}
-                </FeedbackLetter>
-            )
-        });
-        return wordArray;
-    }
-
-    renderWord(words = []) {
-        return words.map((c,i)  => {
-            return (
-                <FeedbackWord key={c}>
-                    {this.renderFeedbackLetters(c, i)}
-                </FeedbackWord>
-            )
-        });
     }
 
     renderLetters(word = []) {
@@ -122,29 +81,16 @@ class Game extends Component {
         })
     }
 
-
     render() {
         //Variables
         const {words, progress, isGameFinished, errors} = this.state;
         const actualWord = words[progress];
         const letters = this.renderLetters(actualWord);
-        const gameId = 1;
 
         //conditional variables
         const gameTitle = isGameFinished ? 
         "Congratulations! You completed the level!" : 
         "Click the words that should be accented";
-
-        const feedback = isGameFinished ?  
-                        <GameFeedback 
-                        gameId={gameId}
-                        score={progress || 0} 
-                        mistakes={errors || 0}
-                        >
-                        {this.renderWord(words)}
-                        </GameFeedback> 
-                        :
-                        null;
 
         const scoreBoard = !isGameFinished ?
                             <Score 
@@ -161,9 +107,9 @@ class Game extends Component {
                     <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
                     <div className="container d-flex justify-content-center align-items-center">
                         {letters}
-                        {feedback}
+                        {isGameFinished ? <GameFeedback history={this.state.GameHistory}/> : null}
                     </div>
-                    {scoreBoard}
+                   {scoreBoard}
                 </div>
             </div>
         )

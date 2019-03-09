@@ -1,36 +1,19 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import FeedbackWord from "./FeedbackWord"
+import data from '../assets/data/Game-1-Data';
 
 const GameFeedback = (props) => {
+    console.log(props.history)
+    let historyforeachword = props.history.join("").split(" ")
+    console.log(historyforeachword)
+    let FeedbackWords = data.words.map( (word, i) => 
+         <FeedbackWord word={word} history={historyforeachword[i]}/>
+    );
     return (
-        <div className="container d-flex flex-column text-left">
-            <div className="container d-flex flex-row justify-content-around">
-                <h2>Score: {props.score}</h2>
-                <h2 className="mb-5">Mistakes: {props.mistakes}</h2>
-            </div>
-            <div className="container d-flex flex-column">
-                {props.children}
-            </div>
-            <div className="d-flex justify-content-around mt-5">
-                <button className="btn btn-success">
-                    <Link to="/" className="text-white">Next Level</Link>
-                </button>
-                <button className="btn btn-primary">
-                    <Link to={"/game1/" + props.gameId} className="text-white">Try Again</Link>
-                </button>
-                <button className="btn btn-danger">
-                    <Link to="/dashboard" className="text-white">Go To Dashboard</Link>
-                </button>
-            </div>
-        </div>
+        <>
+            {FeedbackWords}
+        </>
     )
-}
-
-GameFeedback.propTypes = {
-    gameId: PropTypes.number,
-    score: PropTypes.number,
-    mistakes: PropTypes.number,
 }
 
 export default GameFeedback;

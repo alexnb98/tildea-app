@@ -1,16 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import utils from '../utils/utils';
 
 const FeedbackWord = props => {
-    return (
-        <ul className="list-group d-flex flex-row mb-3">
-                {props.children}
-        </ul>
-    )
-}
+    const letters = props.word.split("");
+    const arrayofwordhistory = props.history.split("")
+    
+    const separatedLetter = letters.map( (letter, i) => {
+        let style = { backgroundColor: "white"}
+        if(arrayofwordhistory.includes(letter)){
+            style = { backgroundColor: "red" };
+            if(utils.hasAccent(letter)){
+                style = { backgroundColor: "green"}
+            }
+        }
 
-FeedbackWord.propTypes = {
-    children: PropTypes.array,
+        return (
+            <p style={style}>{letter}</p>    
+        )
+    })
+
+    return (
+        <div>
+            {separatedLetter}
+        </div>
+    )
 }
 
 export default FeedbackWord;
