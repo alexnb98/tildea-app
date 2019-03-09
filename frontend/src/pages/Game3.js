@@ -5,6 +5,7 @@ import MediumBoard from '../components/MediumBoard';
 import HardBoard from '../components/HardBoard';
 import Score from '../components/Score';
 import utils from '../utils/utils';
+import ShuffleBoardConstructor from '../components/ShuffleBoardConstructor'
 
 
 const colorSuccess = "bg-success";
@@ -20,10 +21,6 @@ class Game3 extends Component {
         isComplete: false,
     }
 
-    handleNextDifficultyLevel() {
-        console.log("this method runs");
-    }
-
     handleSuccess = e => {
         e.persist();
         utils.classToggle(e, colorSuccess);
@@ -32,7 +29,6 @@ class Game3 extends Component {
                 progress: this.state.progress+1,
             })
             utils.classToggle(e, colorSuccess);
-
             const {words, progress, difficulties, difficultyIndex} = this.state;
             const ammountOfWordsInTheActualDifficultyLevel = words[difficulties[difficultyIndex]].length;
             if(progress === ammountOfWordsInTheActualDifficultyLevel) {
@@ -40,7 +36,6 @@ class Game3 extends Component {
                     difficultyIndex: difficultyIndex + 1,
                     progress: 0,
                 })
-                this.handleNextDifficultyLevel();
             }
         }, 400)
     }
@@ -60,9 +55,19 @@ class Game3 extends Component {
         const {words, progress, isComplete, errors, difficulties, difficultyIndex} = this.state;
         console.log(difficulties[difficultyIndex])
         return (
-            <div>
+            <>
                 <h1 className="font-weight-light text-center mt-5">{!isComplete ? "Click the correct word! ( if you can :P )" : "Congratulations, you have completed the level!"}</h1>
                 <div className="container">
+
+
+                    {
+                        <ShuffleBoardConstructor
+                        option={words[difficulties[difficultyIndex]][progress] || []}
+                        handleSuccess={this.handleSuccess}
+                        handleError={this.handleError}
+                        ></ShuffleBoardConstructor>
+                    }
+
 
                     {
                         difficulties[difficultyIndex] === "easy" ? 
@@ -103,7 +108,7 @@ class Game3 extends Component {
                 >
 
                 </Score>
-            </div>
+            </>
         )
     }
 }
