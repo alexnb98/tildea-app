@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import data from '../assets/data/Game-1-Data';
 import Letter from '../components/Letter';
-import styles from '../assets/css/Game.module.css';
 import utils from '../utils/utils';
 import Score from '../components/Score';
 import GameFeedback from "../components/Game1Feedback";
 
 //variables for controlling color change, just bootstrap classes for now, they could also be implemented as dynamic css classes;
-const colorError = 'bg-danger' || styles.letterDanger; //not implemented yet
-const colorSuccess = "bg-success" || styles.letterSuccess; //not implemented yet
+const colorError = 'bg-danger';
+const colorSuccess = "bg-success";
 class Game extends Component {
     state = {
         errors: 0,
@@ -98,12 +97,18 @@ class Game extends Component {
                             :
                             null;
         return (
-            <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
-                <div className={`${styles.accentGameWord} container py-5`}>
+            <div className="bg-light text-center py-5">
+                <div className="container py-5">
                     <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
-                    <div className="container d-flex justify-content-center align-items-center">
-                        {letters}
-                        {isGameFinished ? <GameFeedback history={GameHistory}/> : null}
+                    <div className="container h-100 py-5">
+                        <div className="py-5">
+                            {letters}
+                        </div>
+                        {isGameFinished ? (
+                            <div>
+                                <GameFeedback history={GameHistory}/>
+                            </div>
+                            ) : null}
                     </div>
                    {scoreBoard}
                 </div>
