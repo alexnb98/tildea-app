@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../assets/css/Letter.module.css';
 
 
 const Letter = (props) => {
     return (
-            <span className={`${styles.letter + " " + props.className} p-sm-2 p-0 text-center m-auto align-center`} id="letter" onClick={props.onClick}>
+            <span className={`${props.className} font-weight-light p-sm-2 p-0 text-center m-auto align-center`} id="letter" onClick={props.onClick}>
                 {props.children}
             </span>
     )

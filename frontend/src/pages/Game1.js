@@ -144,12 +144,12 @@ class Game extends Component {
         //conditional variables
         const gameTitle = isGameFinished ? 
         "Congratulations! You completed the level!" : 
-        "Click the words that should be accented";
+        "Click the letters that should be accented";
 
         return (
             <div className={`${styles.accentGame} jumbotron jumbotron-fluid text-center`}>
                 <div className={`${styles.accentGameWord} container py-5`}>
-                    <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
+                    <h1 className="text-center font-weight-light">{gameTitle}</h1>
                     <div className="container d-flex justify-content-center align-items-center">
                         {letters}
                         {isGameFinished ?  
