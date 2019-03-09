@@ -10,8 +10,8 @@ export default {
         ["repetición", "répeticion", "repeticíon"]
     ],
     hard: [
-        ["paráfrasis", "parafrásis", "parafrasís"],
-        ["esdrújula", "esdrujúla", "ésdrujula"],
-        ["repetición", "répeticion", "repeticíon"]
+        ["paráfrasis", "parafrásis", "parafrasís", "párafrasis"],
+        ["esdrújula", "esdrujúla", "ésdrujula", "esdrujula"],
+        ["repetición", "répeticion", "repeticíon", "repéticion"]
     ]
 }

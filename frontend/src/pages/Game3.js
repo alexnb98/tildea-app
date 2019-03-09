@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
-import Letter from '../components/Letter';
 import data from '../assets/data/Game-3-Data';
 import EasyBoard from '../components/EasyBoard';
-import Sentence from '../components/Sentence';
 
 
 class Game3 extends Component {
+
+    state = {
+        words: data,
+        end: false
+    }
+
     render() {
+        console.log(this.words);
         return (
             <div>
-                <h1>Helluo from game 3</h1>
+                <h1 className="font-weight-light text-center mt-5">{!this.state.end ? "Click the correct word!" : "Congratulations, you have completed the level!"}</h1>
                 <div className="container">
                     <EasyBoard></EasyBoard>
                 </div>
