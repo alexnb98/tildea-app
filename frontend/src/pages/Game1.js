@@ -17,41 +17,37 @@ class Game extends Component {
         words: data.words.slice(),
         GameHistory: [],
     }
-    
+
+    // why is this is necesary?
+    // you should not modify the state directly when using react 
     resetWordColors(){
         [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
             c.classList.remove(colorError);
             c.classList.remove(colorSuccess);
         })
     }
+
     toggleThisWordsAccent(e) {
         e.target.textContent = utils.toggleAccent(e.target.textContent);
     }
     
-    
-    handleError = (e, i) => {
+    handleError = (e, indexClickedLetter) => {
         e.target.classList.add(colorError);
-        let letter = e.target.textContent;
         this.setState({
-                errors: this.state.errors + 1,
-                GameHistory: [...this.state.GameHistory, letter],
+            errors: this.state.errors + 1,
+            GameHistory: [...this.state.GameHistory, indexClickedLetter],
         })
     }
 
-    handleSuccess = (e,i) => {
-        const {progress, GameHistory} = this.state
+    handleSuccess = e => {
+        const {progress, words} = this.state
         e.persist();
         e.target.classList.add(colorSuccess);
         this.toggleThisWordsAccent(e);
-        //the simbol % is used in the Game feedback component to
-        //separate the history for each word
-        let actualHistory = this.state.GameHistory;
-        console.log(actualHistory)
-        let letter = e.target.textContent;
         setTimeout(() => {
             this.setState({
                 progress: progress + 1,
-                GameHistory: [...this.state.GameHistory, letter, " "],
+                GameHistory: [...this.state.GameHistory, " "],
             })
             if(this.state.progress === this.state.words.length) {
                 this.setState({
@@ -69,7 +65,7 @@ class Game extends Component {
                 return (
                     <Letter 
                     key={i} 
-                    onClick={(e) => {this.handleSuccess(e,i)}}
+                    onClick={(e) => {this.handleSuccess(e)}}
                     >
                         {utils.removeAccent(c)}
                     </Letter>
@@ -83,7 +79,7 @@ class Game extends Component {
 
     render() {
         //Variables
-        const {words, progress, isGameFinished, errors} = this.state;
+        const { words, progress, isGameFinished, errors, GameHistory} = this.state;
         const actualWord = words[progress];
         const letters = this.renderLetters(actualWord);
 
@@ -107,7 +103,7 @@ class Game extends Component {
                     <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
                     <div className="container d-flex justify-content-center align-items-center">
                         {letters}
-                        {isGameFinished ? <GameFeedback history={this.state.GameHistory}/> : null}
+                        {isGameFinished ? <GameFeedback history={GameHistory}/> : null}
                     </div>
                    {scoreBoard}
                 </div>
