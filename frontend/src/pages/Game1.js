@@ -15,11 +15,9 @@ class Game extends Component {
         progress: 0,
         isGameFinished: false,
         words: data.words.slice(),
-        GameHistory: [],
+        gameHistory: [],
     }
 
-    // why is this is necesary?
-    // you should not modify the state directly when using react 
     resetWordColors(){
         [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
             c.classList.remove(colorError);
@@ -31,11 +29,11 @@ class Game extends Component {
         e.target.textContent = utils.toggleAccent(e.target.textContent);
     }
     
-    handleError = (e, indexClickedLetter) => {
+    handleMistake = (e, indexClickedLetter) => {
         e.target.classList.add(colorError);
         this.setState({
             errors: this.state.errors + 1,
-            GameHistory: [...this.state.GameHistory, indexClickedLetter],
+            gameHistory: [...this.state.gameHistory, indexClickedLetter],
         })
     }
 
@@ -47,7 +45,7 @@ class Game extends Component {
         setTimeout(() => {
             this.setState({
                 progress: progress + 1,
-                GameHistory: [...this.state.GameHistory, " "],
+                gameHistory: [...this.state.gameHistory, " "],
             })
             if(this.state.progress === this.state.words.length) {
                 this.setState({
@@ -72,14 +70,14 @@ class Game extends Component {
                     )
             }
             return (
-                <Letter key={i} onClick={(e) => {this.handleError(e,i)}}>{c}</Letter>
+                <Letter key={i} onClick={(e) => {this.handleMistake(e,i)}}>{c}</Letter>
             )
         })
     }
 
     render() {
         //Variables
-        const { words, progress, isGameFinished, errors, GameHistory} = this.state;
+        const { words, progress, isGameFinished, errors, gameHistory} = this.state;
         const actualWord = words[progress];
         const letters = this.renderLetters(actualWord);
 
@@ -103,7 +101,7 @@ class Game extends Component {
                     <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
                     <div className="container d-flex justify-content-center align-items-center">
                         {letters}
-                        {isGameFinished ? <GameFeedback history={GameHistory}/> : null}
+                        {isGameFinished ? <GameFeedback history={gameHistory}/> : null}
                     </div>
                    {scoreBoard}
                 </div>
