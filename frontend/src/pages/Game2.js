@@ -52,8 +52,7 @@ class Game2 extends Component {
     }
 
     toggleDisabled = () => {
-      let disabled = this.state.disabled;
-      disabled = !disabled;
+      const disabled = !this.state.disabled;
       this.setState({disabled});
     }
 
@@ -68,9 +67,9 @@ class Game2 extends Component {
     
     render() {
         const {data, success, error, progress} = this.state;
-        const nextBtn = this.state.next ? (
+        const nextBtn = this.state.next ?
           <button onClick={this.handleProgress} className="btn btn-lg btn-secondary">Next</button>
-        ) : null;
+         : null;
 
         const Game = progress < data.length ? (
           <div>
