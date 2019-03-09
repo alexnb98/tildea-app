@@ -1,10 +1,11 @@
 const utils = {
 
-    resetLetterColors(id, colorSuccess, colorError){
-        [].slice.call(document.querySelectorAll(id)).forEach(c => {
-            c.classList.remove(colorError);
-            c.classList.remove(colorSuccess);
-        })
+    classToggle(e, color) {
+        e.target.classList.toggle(color);
+    },
+
+    toggleThisWordsAccent(e) {
+        e.target.textContent = this.toggleAccent(e.target.textContent);
     },
 
     fromAccentToNormal(letter) {

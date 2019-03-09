@@ -23,23 +23,23 @@ class Game extends Component {
     }
     
     handleError = (e, i) => {
-        e.target.classList.add(colorError);
+        e.persist();
+        utils.classToggle(e,colorError)
         const sortedErrors = this.state.errorHistory.concat(i);
         sortedErrors.sort((a,b) => b-a);
         this.setState({
                 errors: this.state.errors + 1,
                 errorHistory: sortedErrors,
         })
-    }
-
-    toggleThisWordsAccent(e) {
-        e.target.textContent = utils.toggleAccent(e.target.textContent);
+        setTimeout(() => {
+            utils.classToggle(e,colorError);
+        }, 400)
     }
     
     handleSuccess = (e,i) => {
         e.persist();
-        e.target.classList.add(colorSuccess);
-        this.toggleThisWordsAccent(e);
+        utils.classToggle(e, colorSuccess);
+        utils.toggleThisWordsAccent(e);
         const sortedErrors = this.state.errorHistory;
         sortedErrors.sort((a,b) => b-a);
         const newLettersHistoryItem = this.state.lettersHistory.concat({
@@ -57,8 +57,8 @@ class Game extends Component {
                     isGameFinished: true,
                 })
             }
-            utils.resetLetterColors("#letter", colorSuccess, colorError);
-            this.toggleThisWordsAccent(e);
+            utils.classToggle(e,colorSuccess);
+            utils.toggleThisWordsAccent(e);
         }, 400);
     }
 
