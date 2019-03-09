@@ -6,15 +6,15 @@ const FeedbackWord = props => {
     const clickedLetterIndex = props.history.split("")
     
     const separatedLetter = letters.map( (letter, i) => {
-        let style = { backgroundColor: "white"}
+        let styleClass = 'bg-white';
         if (clickedLetterIndex.includes(i.toString())) {
-            style = {backgroundColor: "red"}
+            styleClass = 'bg-danger';
         }
         if ( utils.hasAccent(letter) ) {
-            style = {backgroundColor: "green"}
+            styleClass = 'bg-success';
         }
         return (
-            <span className="px-3 pt-1 pb-3 rounded mx-1 d-inline-block display-4" style={style} key={i}>{letter}</span>    
+            <span className={`${styleClass} px-3 pt-1 pb-3 rounded mx-1 d-inline-block display-4`} key={i}>{letter}</span>    
         )
     })
 
