@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
-import styles from '../assets/css/Game.module.css';
 import Option from '../components/Option';
 
 
 const EasyBoard = props => {
+    const i = Math.floor(Math.random() * (props.option.length));
+    const j = i === 0 ? i + 1 : i - 1;
+    const isICorrect = (i === 0 ? true : false).toString();
+    const isJCorrect = (j === 0 ? true : false).toString();
+
     return (
-        <div className="d-flex flex-row container-fluid m-auto">
-            <div className="row py-5 my-5">
+            <div className="row py-4 my-4">
                 <div className="col-md-6 d-flex align-items-center justify-content-center border-right">
                     <Option 
-                    option="hellou2"
-                    onClick={props.onClick}
+                    option={props.option[i]}
+                    click={isICorrect ? props.handleSuccess : props.handleError}
+                    correct={isICorrect}
                     >
                     </Option>
                 </div>
                 <div className="col-md-6 d-flex align-items-center justify-content-center">
                     <Option 
-                    option="hellou2"
-                    onClick={props.onClick}
+                    option={props.option[j]}
+                    click={isJCorrect ? props.handleSuccess : props.handleError}
+                    correct={isJCorrect}
                     >
                     </Option>
                 </div>
-              </div>
-        </div>
+            </div>
     )
 }
 

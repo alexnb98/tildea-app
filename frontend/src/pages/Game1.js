@@ -22,13 +22,6 @@ class Game extends Component {
         words: data.words.slice(),
     }
     
-    resetWordColors(){
-        [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
-            c.classList.remove(colorError);
-            c.classList.remove(colorSuccess);
-        })
-    }
-    
     handleError = (e, i) => {
         e.target.classList.add(colorError);
         const sortedErrors = this.state.errorHistory.concat(i);
@@ -64,7 +57,7 @@ class Game extends Component {
                     isGameFinished: true,
                 })
             }
-            this.resetWordColors();
+            utils.resetLetterColors("#letter", colorSuccess, colorError);
             this.toggleThisWordsAccent(e);
         }, 400);
     }
