@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import data from '../assets/data/Game-3-Data';
-import EasyBoard from '../components/EasyBoard';
-import MediumBoard from '../components/MediumBoard';
-import HardBoard from '../components/HardBoard';
 import Score from '../components/Score';
 import utils from '../utils/utils';
 import ShuffleBoardConstructor from '../components/ShuffleBoardConstructor'
@@ -19,6 +16,7 @@ class Game3 extends Component {
         difficultyIndex: 0,
         difficulties: Object.keys(data),
         isComplete: false,
+        shuffleWordsNow: false,
     }
 
     handleSuccess = e => {
@@ -27,6 +25,7 @@ class Game3 extends Component {
         setTimeout(() => {
             this.setState({
                 progress: this.state.progress+1,
+                shuffleWordsNow:true,
             })
             utils.classToggle(e, colorSuccess);
             const {words, progress, difficulties, difficultyIndex} = this.state;
@@ -46,6 +45,7 @@ class Game3 extends Component {
         setTimeout(() => {
             this.setState({
                 errors: this.state.errors + 1,
+                shuffleWordsNow: false,
             })
             utils.classToggle(e,colorDanger);
         },400)
@@ -53,52 +53,19 @@ class Game3 extends Component {
 
     render() {
         const {words, progress, isComplete, errors, difficulties, difficultyIndex} = this.state;
-        console.log(difficulties[difficultyIndex])
         return (
             <>
                 <h1 className="font-weight-light text-center mt-5">{!isComplete ? "Click the correct word! ( if you can :P )" : "Congratulations, you have completed the level!"}</h1>
                 <div className="container">
 
-
-                    {
+                    { 
                         <ShuffleBoardConstructor
                         option={words[difficulties[difficultyIndex]][progress] || []}
                         handleSuccess={this.handleSuccess}
                         handleError={this.handleError}
+                        triggerShuffle={true}
                         ></ShuffleBoardConstructor>
                     }
-
-
-                    {
-                        difficulties[difficultyIndex] === "easy" ? 
-                        <EasyBoard 
-                        option={words.easy[progress] || []}
-                        handleSuccess={this.handleSuccess}
-                        handleError={this.handleError}
-                        ></EasyBoard> :
-                        null
-                    }
-
-                    {
-                        difficulties[difficultyIndex] === 'medium' ? 
-                        <MediumBoard
-                        option={words.medium[progress] || []}
-                        handleSuccess={this.handleSuccess}
-                        handleError={this.handleError}
-                        ></MediumBoard> : 
-                        null
-                    }
-
-                    {
-                        difficulties[difficultyIndex] === 'hard' ? 
-                        <HardBoard
-                        option={words.hard[progress] || []}
-                        handleSuccess={this.handleSuccess}
-                        handleError={this.handleError}
-                        ></HardBoard> : 
-                        null
-                    }
-
                 
                 </div>
                 <Score
