@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 const Letter = props => {
     return (
-            <span className={`${props.className} font-weight-light p-sm-2 p-0 text-center m-auto align-center`} id="letter" onClick={props.onClick}>
+            <span 
+                className="display-1 text-center px-3 pb-3 d-inline-block"
+                style={{cursor: 'pointer',}} 
+                id="letter" 
+                onClick={props.onClick}>
                 {props.children}
             </span>
     )
