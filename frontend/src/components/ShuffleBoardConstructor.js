@@ -2,42 +2,43 @@ import React from 'react';
 import Option from './Option';
 import utils from '../utils/utils';
 
-const ShuffleBoardConstructor = props => {
-    // static hellou = "string";
-    const AllOptions = props.option.map((c,i) => {
+const ShuffleBoardConstructor = ({option, handleSuccess, handleError, triggerShuffle, shuffleCount}) => {
+    const allOptions = option.map((c,i) => {
         if(i === 0) {
             return (
-                <Option 
-                option={props.option[i]}
-                click={props.handleSuccess}
+                <Option key={c + i}
+                option={option[i]}
+                click={handleSuccess}
                 >
                 </Option>
             )
         } else {
             return (
-                <Option 
-                option={props.option[i]}
-                click={props.handleError}
+                <Option key={c + i}
+                option={option[i]}
+                click={handleError}
                 >
                 </Option>
             )
         }
     })
 
-    const shuffledOptions = props.triggerShuffle ? utils.fisherYatesShuffle(AllOptions) : AllOptions;
+    //this part of the component doesn't work properly yet, we have to develop a way to make him shuffle only when a correct component is clicked, and then inmmediately change this property, so that it doesn't update again.
+    const decideShuffle = shuffleCount === 0 && triggerShuffle ? true : false;
+    const allShuffledOptions = decideShuffle ? utils.fisherYatesShuffle(allOptions) : allOptions;
 
-    const AllStyledOptions = shuffledOptions.map((c,i,a) => {
+    const allStyledOptions = allShuffledOptions.map((c,i,a) => {
         const divClass = i === 0 && a.length % 2 === 1 ? 'col-md-12' : 'col-md-6 mt-5';
         return (
-            <div className={`${divClass} d-flex align-items-center justify-content-center`}>
+            <div key={i} className={`${divClass} d-flex align-items-center justify-content-center`}>
                 {c}
             </div>
         )
     }) 
 
     return (
-        <div className="row py-4 my-4">
-            {AllStyledOptions}
+        <div className="py-5 my-5 row">
+            {allStyledOptions}
         </div>
     )
 }

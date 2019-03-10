@@ -8,7 +8,6 @@ import ShuffleBoardConstructor from '../components/ShuffleBoardConstructor'
 const colorSuccess = "bg-success";
 const colorDanger = "bg-danger";
 class Game3 extends Component {
-
     state = {
         words: Object.assign(data),
         progress: 0,
@@ -16,7 +15,8 @@ class Game3 extends Component {
         difficultyIndex: 0,
         difficulties: Object.keys(data),
         isComplete: false,
-        shuffleWordsNow: false,
+        triggerShuffle: true,
+        shuffleCount: 0,
     }
 
     handleSuccess = e => {
@@ -25,8 +25,9 @@ class Game3 extends Component {
         setTimeout(() => {
             this.setState({
                 progress: this.state.progress+1,
-                shuffleWordsNow:true,
-            })
+                triggerShuffle: true,
+                shuffleCount: 0,
+            });
             utils.classToggle(e, colorSuccess);
             const {words, progress, difficulties, difficultyIndex} = this.state;
             const ammountOfWordsInTheActualDifficultyLevel = words[difficulties[difficultyIndex]].length;
@@ -45,25 +46,28 @@ class Game3 extends Component {
         setTimeout(() => {
             this.setState({
                 errors: this.state.errors + 1,
-                shuffleWordsNow: false,
+                triggerShuffle: false,
+                shuffleCount: this.state.shuffleCount+1,
             })
             utils.classToggle(e,colorDanger);
         },400)
     }
 
     render() {
-        const {words, progress, isComplete, errors, difficulties, difficultyIndex} = this.state;
+        const {words, progress, isComplete, errors, difficulties, difficultyIndex,triggerShuffle, shuffleCount} = this.state;
+
         return (
             <>
                 <h1 className="font-weight-light text-center mt-5">{!isComplete ? "Click the correct word! ( if you can :P )" : "Congratulations, you have completed the level!"}</h1>
                 <div className="container">
 
-                    { 
+                    {
                         <ShuffleBoardConstructor
                         option={words[difficulties[difficultyIndex]][progress] || []}
                         handleSuccess={this.handleSuccess}
                         handleError={this.handleError}
-                        triggerShuffle={true}
+                        triggerShuffle={triggerShuffle}
+                        shuffleCount={shuffleCount}
                         ></ShuffleBoardConstructor>
                     }
                 
