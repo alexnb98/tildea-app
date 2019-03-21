@@ -3,11 +3,11 @@ import data from '../assets/data/Game-1-Data';
 import Letter from '../components/Letter';
 import utils from '../utils/utils';
 import Score from '../components/Score';
-import GameFeedback from "../components/Game1Feedback";
+import GameFeedback from '../components/ScoreBoard';
 
 //variables for controlling color change, just bootstrap classes for now, they could also be implemented as dynamic css classes;
-const colorError = 'bg-danger';
-const colorSuccess = "bg-success";
+const colorError = 'bg-danger'; //not implemented yet
+const colorSuccess = "bg-success"; //not implemented yet
 class Game extends Component {
     state = {
         errors: 0,
@@ -16,31 +16,24 @@ class Game extends Component {
         words: data.words.slice(),
         gameHistory: [],
     }
-
-    resetWordColors(){
-        [].slice.call(document.querySelectorAll('#letter')).forEach(c => {
-            c.classList.remove(colorError);
-            c.classList.remove(colorSuccess);
-        })
-    }
-
-    toggleThisWordsAccent(e) {
-        e.target.textContent = utils.toggleAccent(e.target.textContent);
-    }
     
     handleMistake = (e, indexClickedLetter) => {
-        e.target.classList.add(colorError);
-        this.setState({
-            errors: this.state.errors + 1,
-            gameHistory: [...this.state.gameHistory, indexClickedLetter],
-        })
+        e.persist();
+        utils.classToggle(e,colorError);
+        setTimeout(() => {
+            this.setState({
+                errors: this.state.errors + 1,
+                gameHistory: [...this.state.gameHistory, indexClickedLetter],
+            })
+            utils.classToggle(e,colorError);
+        },400)
     }
 
     handleSuccess = e => {
-        const {progress, words} = this.state
+        const {progress} = this.state
         e.persist();
-        e.target.classList.add(colorSuccess);
-        this.toggleThisWordsAccent(e);
+        utils.classToggle(e,colorSuccess);
+        utils.toggleThisWordsAccent(e);
         setTimeout(() => {
             this.setState({
                 progress: progress + 1,
@@ -51,8 +44,8 @@ class Game extends Component {
                     isGameFinished: true,
                 })
             }
-            this.resetWordColors();
-            this.toggleThisWordsAccent(e);
+            utils.classToggle(e,colorSuccess);
+            utils.toggleThisWordsAccent(e);
         }, 400);
     }
 
@@ -78,37 +71,36 @@ class Game extends Component {
         //Variables
         const { words, progress, isGameFinished, errors, gameHistory} = this.state;
         const actualWord = words[progress];
-        const letters = this.renderLetters(actualWord);
 
         //conditional variables
         const gameTitle = isGameFinished ? 
         "Congratulations! You completed the level!" : 
         "Click the words that should be accented";
 
-        const scoreBoard = !isGameFinished ?
-                            <Score 
-                            score={progress} 
-                            mistakes={errors} 
-                            wordsRemaining={words.length - progress}
-                            >
-                            </Score> 
-                            :
-                            null;
         return (
             <div className="bg-light text-center py-5">
                 <div className="container py-5">
-                    <h1>Game 1: <span className="h2">{gameTitle}</span></h1>
+                    <h1><span className="h1 font-weight-light">{gameTitle}</span></h1>
                     <div className="container h-100 py-5">
                         <div className="py-5">
-                            {letters}
+                            {this.renderLetters(actualWord)}
                         </div>
-                        {isGameFinished ? (
-                            <div>
-                                <GameFeedback history={GameHistory}/>
-                            </div>
-                            ) : null}
+                        {isGameFinished ?
+                            <>
+                                <GameFeedback history={gameHistory}/>
+                            </>
+                        : null}
                     </div>
-                   {scoreBoard}
+                    {!isGameFinished ?
+                        <Score 
+                        score={progress} 
+                        mistakes={errors} 
+                        wordsRemaining={words.length - progress}
+                        >
+                        </Score> 
+                        :
+                        null
+                    }
                 </div>
             </div>
         )

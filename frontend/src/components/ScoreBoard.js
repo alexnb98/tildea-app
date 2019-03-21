@@ -7,7 +7,7 @@ const GameFeedback = (props) => {
     const historyForEachWord = props.history.join("").split(" ")
     // after ["256", "26"]
     const FeedbackWords = data.words.map( (word, i) => 
-         <FeedbackWord word={word} history={historyForEachWord[i]} key={i}/>
+        <FeedbackWord word={word} history={historyForEachWord[i]} key={i}/>
     );
     return (
         <>

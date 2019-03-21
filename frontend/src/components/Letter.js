@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Letter = (props) => {
+const Letter = props => {
     return (
             <span 
                 className="display-1 text-center px-3 pb-3 d-inline-block"
