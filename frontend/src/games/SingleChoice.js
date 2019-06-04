@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import data from "../assets/data/tildea-diacritica-1";
 import {Container, Box, Grid, Typography} from "@material-ui/core";
 import {green, red} from "@material-ui/core/colors";
+import utils from "../utils/utils";
 // import Paper from "../components/Paper";
 
 export default class SigleChoice extends Component {
@@ -17,6 +18,11 @@ export default class SigleChoice extends Component {
 
     componentDidMount() {
         this.setState({data});
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.data.length === 0 || this.state.current !== nextState.current) return true;
+        return false;
     }
 
     nextTask = () => {
@@ -60,19 +66,31 @@ export default class SigleChoice extends Component {
     render() {
         const {data, current} = this.state;
         let options = <Box>Something went wrong</Box>;
-        if (data.length && data[current].options.length <= 2) {
-            options = (
-                <Grid container justify="center" direction={Math.random() >= 0.5 ? "row" : "row-reverse"}>
-                    <Box key="correct" onClick={this.correct} p={3} m={2} borderRadius={5} boxShadow={2}>
-                        <Typography variant={"h4"}>{data[current].options[0]}</Typography>
+        let shuffledOptions = <Box>Not shuffled</Box>;
+        if (data.length) {
+            options = data[current].options.map((item, index) => {
+                if (index === 0)
+                    return (
+                        <Box
+                            mx={4}
+                            key={item + index}
+                            onClick={this.correct}
+                            p={3}
+                            m={2}
+                            borderRadius={5}
+                            boxShadow={2}
+                        >
+                            <Typography variant={"h4"}>{item}</Typography>
+                        </Box>
+                    );
+                return (
+                    <Box mx={4} key={item + index} onClick={this.incorrect} p={3} m={2} borderRadius={5} boxShadow={2}>
+                        <Typography variant={"h4"}>{item}</Typography>
                     </Box>
-                    <Box key="incorrect" onClick={this.incorrect} p={3} m={2} borderRadius={5} boxShadow={2}>
-                        <Typography variant={"h4"}>{data[current].options[1]}</Typography>
-                    </Box>
-                </Grid>
-            );
-        } else {
-            options = <Box>Use Fishermann Shuffle</Box>;
+                );
+            });
+
+            shuffledOptions = utils.fisherYatesShuffle(options);
         }
         return (
             <Container maxWidth="md">
@@ -89,7 +107,9 @@ export default class SigleChoice extends Component {
                                 </Box>
                             )}
                         </Box>
-                        {options}
+                        <Grid justify="center" container>
+                            {shuffledOptions}
+                        </Grid>
                     </Box>
                 </Grid>
             </Container>
