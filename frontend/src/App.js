@@ -13,6 +13,7 @@ import Game2 from "./pages/Game2";
 import Game3 from "./pages/Game3";
 import Tutorial from "./pages/Tutorial";
 import SilabaTonica from "./games/SilabaTonica";
+import SingleChoice from "./games/SingleChoice";
 
 let theme = createMuiTheme({
     // status: {
@@ -34,6 +35,7 @@ class App extends Component {
                         <Route path="/game2/:id" component={Game2} />
                         <Route path="/game3/:id" component={Game3} />
                         <Route path="/silaba-tonica/" component={SilabaTonica} />
+                        <Route path="/agudas/" component={SingleChoice} />
                         <Route path="/tutorial/" component={Tutorial} />
                     </Switch>
                 </ThemeProvider>
