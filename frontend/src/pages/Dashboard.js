@@ -18,7 +18,36 @@ const Landing = props => (
                         <Box mr={3} bgcolor={grey[200]} p={3} borderRadius={8}>
                             Start
                         </Box>
-                        <Box onClick={() => props.history.push("/silaba-tonica")} mr={3} bgcolor={grey[200]} py={2} px={3} borderRadius={8}>
+                        <Box
+                            onClick={() => props.history.push("/silaba-tonica")}
+                            mr={3}
+                            bgcolor={grey[200]}
+                            py={2}
+                            px={3}
+                            borderRadius={8}
+                        >
+                            <Typography variant="h5">1</Typography>
+                        </Box>
+                    </Grid>
+                </Box>
+            </Paper>
+            <Paper>
+                <Box m={2} p={2}>
+                    <Typography variant="h4" gutterBottom>
+                        Agudas
+                    </Typography>
+                    <Grid container>
+                        <Box mr={3} bgcolor={grey[200]} p={3} borderRadius={8}>
+                            Start
+                        </Box>
+                        <Box
+                            onClick={() => props.history.push("/agudas")}
+                            mr={3}
+                            bgcolor={grey[200]}
+                            py={2}
+                            px={3}
+                            borderRadius={8}
+                        >
                             <Typography variant="h5">1</Typography>
                         </Box>
                     </Grid>

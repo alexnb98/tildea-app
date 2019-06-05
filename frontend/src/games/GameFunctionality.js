@@ -1,13 +1,21 @@
 import React, {Component} from "react";
-import {Container, Grid, Typography, Box} from "@material-ui/core";
-import data from "../assets/data/silaba-tonica-data";
-import Stats from "../components/Stats";
-import Syllable from "../components/Syllable";
+import data from "../assets/data/agudas-1";
+import {Container, Box, Typography} from "@material-ui/core";
 import utils from "../utils/utils";
+import Stats from "../components/Stats";
+import SingleChoice from "../components/SingleChoice";
 
-export default class SilabaTonica extends Component {
+// TODO:
+// // * create global theme
+// // * work with classes instead of e.target.style
+// // * Refactor paper
+// * include an end
+// * render stats
+// * works with more than 3 words
+
+export default class SigleChoice extends Component {
     state = {
-        words: [],
+        data: [],
         current: 0,
         stats: {
             correct: 0,
@@ -17,7 +25,12 @@ export default class SilabaTonica extends Component {
     };
 
     componentDidMount() {
-        this.setState({words: data});
+        this.setState({data});
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.data.length === 0 || this.state.current !== nextState.current) return true;
+        return false;
     }
 
     nextTask = () => {
@@ -55,18 +68,25 @@ export default class SilabaTonica extends Component {
     };
 
     render() {
-        const {current, words, stats} = this.state;
+        const {data, stats, current} = this.state;
+
         return (
             <Container maxWidth="md">
-                <Grid container style={{minHeight: "50vh"}} justify="center" alignItems="center">
-                    <Box>
-                        <Typography variant="h2" align="center" gutterBottom>
-                            Selecciona la sílaba tonica
+                {data.length && current < data.length ? (
+                    <SingleChoice
+                        sentence={data[current].sentence}
+                        options={data[current].options}
+                        correct={this.correct}
+                        incorrect={this.incorrect}
+                    />
+                ) : (
+                    <Box my={5}>
+                        <Typography variant="h2" align="center">
+                            Felicitaciones, completaste el nivel!
                         </Typography>
-                        <Syllable words={words} current={current} correct={this.correct} incorrect={this.incorrect} />
                     </Box>
-                </Grid>
-                <Stats correct={stats.correct} incorrect={stats.incorrect} missing={words.length - current} />
+                )}
+                <Stats correct={stats.correct} incorrect={stats.incorrect} missing={data.length - current} />
             </Container>
         );
     }
