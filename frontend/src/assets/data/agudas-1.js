@@ -1,7 +1,7 @@
 export default [
     {
         id: 1,
-        options: ["Acción", "Accion"]
+        options: ["Acción", "Accion", "Áccion", "Accíon"]
     },
     {
         id: 2,

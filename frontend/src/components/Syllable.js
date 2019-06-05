@@ -15,9 +15,7 @@ export default function Syllable({words, current, correct, incorrect}) {
                     <Paper
                         key={i}
                         text={silable}
-                        condition={words[current].correct === i}
-                        correct={correct}
-                        incorrect={incorrect}
+                        click={words[current].correct === i ? correct : incorrect}
                         isMobile={isMobile}
                     />
                 ))
