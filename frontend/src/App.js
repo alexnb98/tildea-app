@@ -12,8 +12,7 @@ import Game1 from "./pages/Game1";
 import Game2 from "./pages/Game2";
 import Game3 from "./pages/Game3";
 import Tutorial from "./pages/Tutorial";
-import SilabaTonica from "./games/SilabaTonica";
-import SingleChoice from "./games/GameFunctionality";
+import GameFunctionality from "./games/GameFunctionality";
 
 const App = () => {
     globalStyles();
@@ -27,8 +26,8 @@ const App = () => {
                     <Route path="/game1/:id" component={Game1} />
                     <Route path="/game2/:id" component={Game2} />
                     <Route path="/game3/:id" component={Game3} />
-                    <Route path="/silaba-tonica/" component={SilabaTonica} />
-                    <Route path="/agudas/" component={SingleChoice} />
+                    <Route path="/silaba-tonica/" component={GameFunctionality} />
+                    <Route path="/agudas/" component={GameFunctionality} />
                     <Route path="/tutorial/" component={Tutorial} />
                 </Switch>
             </ThemeProvider>
