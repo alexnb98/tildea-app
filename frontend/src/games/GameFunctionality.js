@@ -1,21 +1,16 @@
 import React, {Component} from "react";
-import data from "../assets/data/agudas-1";
+import agudas from "../assets/data/agudas-1";
+import silabaTonica from "../assets/data/silaba-tonica-data";
 import {Container, Box, Typography} from "@material-ui/core";
 import utils from "../utils/utils";
 import Stats from "../components/Stats";
 import SingleChoice from "../components/SingleChoice";
-
-// TODO:
-// // * create global theme
-// // * work with classes instead of e.target.style
-// // * Refactor paper
-// * include an end
-// * render stats
-// * works with more than 3 words
+import Syllable from "../components/Syllable"
 
 export default class SigleChoice extends Component {
     state = {
-        data: [],
+        game: null,
+        exercises: [],
         current: 0,
         stats: {
             correct: 0,
@@ -25,11 +20,15 @@ export default class SigleChoice extends Component {
     };
 
     componentDidMount() {
-        this.setState({data});
+        if(this.props.match.path === '/agudas/') {
+            this.setState({exercises: agudas.exercises, game: agudas.game});
+        } else if(this.props.match.path === '/silaba-tonica/'){
+            this.setState({exercises: silabaTonica.exercises, game: silabaTonica.game});
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.data.length === 0 || this.state.current !== nextState.current) return true;
+        if (this.state.exercises.length === 0 || this.state.current !== nextState.current) return true;
         return false;
     }
 
@@ -68,17 +67,26 @@ export default class SigleChoice extends Component {
     };
 
     render() {
-        const {data, stats, current} = this.state;
-
+        const {exercises, stats, game, current} = this.state;
+        let gameRender;
+        if(game === 0){
+            gameRender = (
+                <SingleChoice
+                    sentence={exercises[current].sentence}
+                    options={exercises[current].options}
+                    correct={this.correct}
+                    incorrect={this.incorrect}
+                    />
+            )
+        } else if(game === 1){
+            gameRender = (
+                <Syllable word={exercises[current].word} correctIndex={exercises[current].correct} correct={this.correct} incorrect={this.incorrect} />
+            )
+        }
         return (
             <Container maxWidth="md">
-                {data.length && current < data.length ? (
-                    <SingleChoice
-                        sentence={data[current].sentence}
-                        options={data[current].options}
-                        correct={this.correct}
-                        incorrect={this.incorrect}
-                    />
+                {exercises.length && current < exercises.length ? (
+                    <React.Fragment>{gameRender}</React.Fragment>
                 ) : (
                     <Box my={5}>
                         <Typography variant="h2" align="center">
@@ -86,7 +94,7 @@ export default class SigleChoice extends Component {
                         </Typography>
                     </Box>
                 )}
-                <Stats correct={stats.correct} incorrect={stats.incorrect} missing={data.length - current} />
+                <Stats correct={stats.correct} incorrect={stats.incorrect} missing={exercises.length - current} />
             </Container>
         );
     }
