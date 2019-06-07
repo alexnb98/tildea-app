@@ -1,12 +1,19 @@
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
-import { green, red } from "@material-ui/core/colors";
-import { makeStyles } from "@material-ui/styles";
+import {createMuiTheme, responsiveFontSizes} from "@material-ui/core/styles";
+import {green, red} from "@material-ui/core/colors";
+import {makeStyles} from "@material-ui/styles";
 
-let theme = createMuiTheme();
+let theme = createMuiTheme({
+    typography: {
+        body1: {
+            fontSize: "1.3rem",
+            marginBottom: "1rem"
+        }
+    }
+});
 
 theme = responsiveFontSizes(theme);
 
-export { theme };
+export {theme};
 
 export const globalStyles = makeStyles({
     "@global": {
