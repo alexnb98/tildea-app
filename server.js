@@ -5,7 +5,11 @@ const port = 5000;
 
 // routes
 app.use("/api/agudas", require("./routes/api/agudas"));
+app.use("/api/silaba-tonica", require("./routes/api/silaba-tonica"));
+app.use("/api/tilde-diacritica", require("./routes/api/tilde-diacritica"));
 
-app.get("/", (req, res) => res.send("<h1>hello world</h1>"));
+app.use(function(req, res, next) {
+    res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
+});
 
 app.listen(port, () => console.log("app running"));
