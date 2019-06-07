@@ -1,11 +1,13 @@
 import React, {Component} from "react";
-import agudas from "../assets/data/agudas-1";
-import silabaTonica from "../assets/data/silaba-tonica-data";
+import data from "../assets/data/agudas-1";
+// import data from "../assets/data/agudas-start";
+// import silabaTonica from "../assets/data/silaba-tonica-data";
 import {Container, Box, Typography} from "@material-ui/core";
 import utils from "../utils/utils";
 import Stats from "../components/Stats";
 import SingleChoice from "../components/SingleChoice";
-import Syllable from "../components/Syllable"
+import Syllable from "../components/Syllable";
+import JsonToMarkdown from "../components/JsonToMarkdown";
 
 export default class SigleChoice extends Component {
     state = {
@@ -20,10 +22,10 @@ export default class SigleChoice extends Component {
     };
 
     componentDidMount() {
-        if(this.props.match.path === '/agudas/') {
-            this.setState({exercises: agudas.exercises, game: agudas.game});
-        } else if(this.props.match.path === '/silaba-tonica/'){
-            this.setState({exercises: silabaTonica.exercises, game: silabaTonica.game});
+        if (this.props.match.path.includes("/agudas/")) {
+            this.setState({exercises: data.exercises, game: data.game});
+        } else if (this.props.match.path === "/silaba-tonica/") {
+            this.setState({exercises: data.exercises, game: data.game});
         }
     }
 
@@ -68,25 +70,29 @@ export default class SigleChoice extends Component {
 
     render() {
         const {exercises, stats, game, current} = this.state;
-        let gameRender;
-        if(game === 0){
-            gameRender = (
-                <SingleChoice
-                    sentence={exercises[current].sentence}
-                    options={exercises[current].options}
-                    correct={this.correct}
-                    incorrect={this.incorrect}
-                    />
-            )
-        } else if(game === 1){
-            gameRender = (
-                <Syllable word={exercises[current].word} correctIndex={exercises[current].correct} correct={this.correct} incorrect={this.incorrect} />
-            )
+        let gameRender = [
+            <SingleChoice
+                sentence={exercises[current] && exercises[current].sentence}
+                options={exercises[current] && exercises[current].options}
+                correct={this.correct}
+                incorrect={this.incorrect}
+            />,
+            <Syllable
+                word={exercises[current] && exercises[current].word}
+                correctIndex={exercises[current] && exercises[current].correct}
+                correct={this.correct}
+                incorrect={this.incorrect}
+            />
+        ];
+        let explanation;
+        if (data.content) {
+            explanation = <JsonToMarkdown content={data.content} />;
         }
         return (
             <Container maxWidth="md">
+                {explanation}
                 {exercises.length && current < exercises.length ? (
-                    <React.Fragment>{gameRender}</React.Fragment>
+                    <React.Fragment>{gameRender[game]}</React.Fragment>
                 ) : (
                     <Box my={5}>
                         <Typography variant="h2" align="center">

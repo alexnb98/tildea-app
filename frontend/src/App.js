@@ -1,8 +1,8 @@
 // third party librarys
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/styles";
-import { theme, globalStyles } from "./utils/theme";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {ThemeProvider} from "@material-ui/styles";
+import {theme, globalStyles} from "./utils/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 // Components
@@ -28,11 +28,8 @@ const App = () => {
                     <Route path="/game1/:id" component={Game1} />
                     <Route path="/game2/:id" component={Game2} />
                     <Route path="/game3/:id" component={Game3} />
-                    <Route
-                        path="/silaba-tonica/"
-                        component={GameFunctionality}
-                    />
-                    <Route path="/agudas/" component={GameFunctionality} />
+                    <Route path="/silaba-tonica/" component={GameFunctionality} />
+                    <Route path="/agudas/:id" component={GameFunctionality} />
                     <Route path="/tutorial/" component={Tutorial} />
                 </Switch>
             </ThemeProvider>
