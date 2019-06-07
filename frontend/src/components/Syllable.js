@@ -4,14 +4,14 @@ import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Paper from "./Paper";
 
-export default function Syllable({word, correctIndex, correct, incorrect}) {
+export default function Syllable({options, correctIndex, correct, incorrect}) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
         <Grid container justify="center" alignItems="center" style={{minHeight: "50vh"}}>
-            {word ? (
-                word.map((syllable, i) => (
+            {options ? (
+                options.map((syllable, i) => (
                     <Paper
                         key={i}
                         text={syllable}

@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import data from "../assets/data/agudas-1";
-// import data from "../assets/data/agudas-start";
-// import silabaTonica from "../assets/data/silaba-tonica-data";
-import {Container, Box, Typography} from "@material-ui/core";
+import {Grid, Container, Box, Typography, CircularProgress} from "@material-ui/core";
+import axios from "axios";
+
+// components
 import utils from "../utils/utils";
 import Stats from "../components/Stats";
 import SingleChoice from "../components/SingleChoice";
@@ -18,15 +18,30 @@ export default class SigleChoice extends Component {
             correct: 0,
             incorrect: 0
         },
-        disable: false
+        disable: false,
+        loading: true,
+        error: null
     };
 
     componentDidMount() {
-        if (this.props.match.path.includes("/agudas/")) {
-            this.setState({exercises: data.exercises, game: data.game});
-        } else if (this.props.match.path === "/silaba-tonica/") {
-            this.setState({exercises: data.exercises, game: data.game});
-        }
+        axios
+            .get(`/api${this.props.match.url}`)
+            .then(({data}) => {
+                if (data.content) {
+                    this.setState({
+                        exercises: data.exercises,
+                        game: data.game,
+                        content: data.content,
+                        loading: false
+                    });
+                } else {
+                    this.setState({exercises: data.exercises, game: data.game, loading: false});
+                }
+            })
+            .catch(err => {
+                console.log({...err});
+                this.setState({loading: false, error: err.response.data});
+            });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -69,7 +84,7 @@ export default class SigleChoice extends Component {
     };
 
     render() {
-        const {exercises, stats, game, current} = this.state;
+        const {exercises, stats, game, current, error, loading} = this.state;
         let gameRender = [
             <SingleChoice
                 sentence={exercises[current] && exercises[current].sentence}
@@ -78,29 +93,39 @@ export default class SigleChoice extends Component {
                 incorrect={this.incorrect}
             />,
             <Syllable
-                word={exercises[current] && exercises[current].word}
+                options={exercises[current] && exercises[current].options}
                 correctIndex={exercises[current] && exercises[current].correct}
                 correct={this.correct}
                 incorrect={this.incorrect}
             />
         ];
         let explanation;
-        if (data.content) {
-            explanation = <JsonToMarkdown content={data.content} />;
+        if (this.state.content) {
+            explanation = <JsonToMarkdown content={this.state.content} />;
         }
         return (
             <Container maxWidth="md">
-                {explanation}
-                {exercises.length && current < exercises.length ? (
-                    <React.Fragment>{gameRender[game]}</React.Fragment>
+                {loading || error ? (
+                    <Grid container justify="center" alignContent="center" style={{minHeight: "50vh"}}>
+                        {error ? <Typography variant="h4">{error}</Typography> : <CircularProgress />}
+                    </Grid>
                 ) : (
-                    <Box my={5}>
-                        <Typography variant="h2" align="center">
-                            Felicitaciones, completaste el nivel!
-                        </Typography>
-                    </Box>
+                    <React.Fragment>
+                        {explanation}
+                        {exercises.length && current < exercises.length ? (
+                            <React.Fragment>{gameRender[game]}</React.Fragment>
+                        ) : (
+                            <Box my={5}>
+                                <Typography variant="h2" align="center">
+                                    Felicitaciones, completaste el nivel!
+                                </Typography>
+                            </Box>
+                        )}
+                    </React.Fragment>
                 )}
-                <Stats correct={stats.correct} incorrect={stats.incorrect} missing={exercises.length - current} />
+                {loading || error ? null : (
+                    <Stats correct={stats.correct} incorrect={stats.incorrect} missing={exercises.length - current} />
+                )}
             </Container>
         );
     }
