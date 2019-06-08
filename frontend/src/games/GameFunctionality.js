@@ -8,6 +8,7 @@ import Stats from "../components/Stats";
 import SingleChoice from "../components/SingleChoice";
 import Syllable from "../components/Syllable";
 import JsonToMarkdown from "../components/JsonToMarkdown";
+import AccentLetter from "../components/AccentLetter";
 
 export default class SigleChoice extends Component {
     state = {
@@ -40,7 +41,9 @@ export default class SigleChoice extends Component {
             })
             .catch(err => {
                 console.log({...err});
-                this.setState({loading: false, error: err.response.data});
+                if (err.response) {
+                    this.setState({loading: false, error: err.response.data});
+                }
             });
     }
 
@@ -97,6 +100,11 @@ export default class SigleChoice extends Component {
                 correctIndex={exercises[current] && exercises[current].correct}
                 correct={this.correct}
                 incorrect={this.incorrect}
+            />,
+            <AccentLetter
+                word={exercises[current] && exercises[current].word}
+                correct={this.correct}
+                incorrect={e => e.currentTarget.classList.add(utils.incorrect)}
             />
         ];
         let explanation;
