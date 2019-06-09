@@ -19,6 +19,7 @@ export default class SigleChoice extends Component {
             correct: 0,
             incorrect: 0
         },
+        elements: [],
         disable: false,
         loading: true,
         error: null
@@ -47,14 +48,9 @@ export default class SigleChoice extends Component {
             });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.exercises.length === 0 || this.state.current !== nextState.current) return true;
-        return false;
-    }
-
     nextTask = () => {
         this.setState(state => {
-            return {current: state.current + 1, disable: false};
+            return {current: state.current + 1, disable: false, elements: []};
         });
     };
 
@@ -67,11 +63,15 @@ export default class SigleChoice extends Component {
             current.classList.add(utils.correct);
             setTimeout(() => {
                 current.classList.remove(utils.correct);
+                if (this.state.elements.length) {
+                    this.state.elements.forEach(el => el.classList.remove(utils.incorrect));
+                }
                 this.nextTask();
             }, 1000);
         }
     };
 
+    //use if it should fire nextTast()
     incorrect = e => {
         if (!this.state.disable) {
             this.setState(state => {
@@ -86,26 +86,37 @@ export default class SigleChoice extends Component {
         }
     };
 
+    // use if it only should increment incorrect stats
+    error = e => {
+        const current = e.currentTarget;
+        if (!this.state.elements.includes(current)) {
+            this.setState(state => {
+                return {
+                    stats: {...state.stats, incorrect: state.stats.incorrect + 1},
+                    elements: [...state.elements, current]
+                };
+            });
+            current.classList.add(utils.incorrect);
+        }
+    };
+
     render() {
         const {exercises, stats, game, current, error, loading} = this.state;
+        const curEx = exercises[current]; // current exercise
         let gameRender = [
             <SingleChoice
-                sentence={exercises[current] && exercises[current].sentence}
-                options={exercises[current] && exercises[current].options}
+                sentence={curEx && curEx.sentence}
+                options={curEx && curEx.options}
                 correct={this.correct}
                 incorrect={this.incorrect}
             />,
             <Syllable
-                options={exercises[current] && exercises[current].options}
-                correctIndex={exercises[current] && exercises[current].correct}
+                options={curEx && curEx.options}
+                correctIndex={curEx && curEx.correct}
                 correct={this.correct}
                 incorrect={this.incorrect}
             />,
-            <AccentLetter
-                word={exercises[current] && exercises[current].word}
-                correct={this.correct}
-                incorrect={e => e.currentTarget.classList.add(utils.incorrect)}
-            />
+            <AccentLetter word={curEx && curEx.word} correct={this.correct} incorrect={this.error} />
         ];
         let explanation;
         if (this.state.content) {

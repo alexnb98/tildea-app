@@ -4,6 +4,7 @@ import Paper from "./Paper";
 import utils from "../utils/utils";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Letter from "./Letter";
 
 export default function AccentLetter({word, correct, incorrect}) {
     const theme = useTheme();
@@ -13,26 +14,9 @@ export default function AccentLetter({word, correct, incorrect}) {
             {word ? (
                 word.split("").map((letter, i) => {
                     if (i === utils.getAccentIndex(word)) {
-                        return (
-                            <Box key={i} onClick={correct} p={2} fontSize={30} mx={1} boxShadow={2} borderRadius={8}>
-                                {letter}
-                            </Box>
-                        );
+                        return <Letter key={i} click={correct} letter={utils.toggleAccent(letter)} />;
                     }
-                    return (
-                        <Box
-                            ref={e => (e ? e.classList.remove(utils.incorrect) : null)}
-                            key={i}
-                            onClick={e => e.currentTarget.classList.add(utils.incorrect)}
-                            p={2}
-                            fontSize={30}
-                            mx={1}
-                            boxShadow={2}
-                            borderRadius={8}
-                        >
-                            {letter}
-                        </Box>
-                    );
+                    return <Letter key={i} click={incorrect} letter={letter} />;
                 })
             ) : (
                 <Box p={3} mx={2} borderRadius={5} boxShadow={2}>

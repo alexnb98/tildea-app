@@ -2,18 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Box} from "@material-ui/core";
 
-const Letter = props => {
+const Letter = ({letter, click, isMobile}) => {
     return (
-        <Box
-            p={2}
-            borderRadius={8}
-            mx={2}
-            boxShadow={2}
-            style={{cursor: "pointer"}}
-            // id="letter"
-            onClick={props.onClick}
-        >
-            {props.children}
+        <Box onClick={click} p={2} fontSize={30} mx={1} boxShadow={2} borderRadius={8}>
+            {letter}
         </Box>
     );
 };

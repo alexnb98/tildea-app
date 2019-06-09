@@ -1,11 +1,11 @@
-import React from "react";
+import React, {memo} from "react";
 import {Grid, Box, Typography} from "@material-ui/core";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Paper from "./Paper";
 import utils from "../utils/utils";
 
-export default function SingleChoice({sentence, options, correct, incorrect}) {
+const SingleChoice = function({sentence, options, correct, incorrect}) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -36,4 +36,6 @@ export default function SingleChoice({sentence, options, correct, incorrect}) {
             </Box>
         </Grid>
     );
-}
+};
+
+export default memo(SingleChoice);

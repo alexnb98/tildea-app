@@ -12,9 +12,9 @@ export default function Levels({ title, levels, link, history }) {
                 </Typography>
                 <Grid container>
                     {levels &&
-                        levels.map(level => {
+                        levels.map((level, index) => {
                             return (
-                                <Link to={`/${link}/${level}`}>
+                                <Link key={index} to={`/${link}/${level}`}>
                                     <Box
                                         mr={3}
                                         bgcolor={grey[200]}
