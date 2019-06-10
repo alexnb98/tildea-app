@@ -1,4 +1,4 @@
-const utils = {
+export const utils = {
     correct: "correct",
     incorrect: "incorrect",
 
@@ -118,4 +118,22 @@ const utils = {
     }
 };
 
-export default utils;
+export const nextLevel = (url, dashboardLevels) => {
+    // ? this logic determines the next level
+    const [, topic, level] = url.split("/"); // ["", "topic", "level"]
+    let nextTopic = topic;
+    let nextLevel = 1;
+    // ? if the current level is "start", we continue with the default values
+    if (level !== "start") {
+        const topicIndex = dashboardLevels.findIndex(el => el.link === topic);
+        if (level >= dashboardLevels[topicIndex].levels.length - 1) {
+            // ? this was the last level on this topic, move to next topic
+            nextTopic = dashboardLevels[topicIndex + 1].link;
+            nextLevel = "start";
+        } else {
+            // ? this means there are more levels in the same topic
+            nextLevel = +level + 1;
+        }
+    }
+    return `/${nextTopic}/${nextLevel}`;
+};
