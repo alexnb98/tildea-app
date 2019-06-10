@@ -1,23 +1,24 @@
 import React from "react";
 import {Grid, Box, Typography} from "@material-ui/core";
-import Paper from "./Paper";
-import utils from "../utils/utils";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Letter from "./Letter";
+import Paper from "../components/Paper";
 
-export default function AccentLetter({word, correct, incorrect}) {
+export default function Syllable({options, correctIndex, correct, incorrect}) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
     return (
         <Grid container justify="center" alignItems="center" style={{minHeight: "50vh"}}>
-            {word ? (
-                word.split("").map((letter, i) => {
-                    if (i === utils.getAccentIndex(word)) {
-                        return <Letter key={i} click={correct} letter={utils.toggleAccent(letter)} />;
-                    }
-                    return <Letter key={i} click={incorrect} letter={letter} />;
-                })
+            {options ? (
+                options.map((syllable, i) => (
+                    <Paper
+                        key={i}
+                        text={syllable}
+                        click={correctIndex === i ? correct : incorrect}
+                        isMobile={isMobile}
+                    />
+                ))
             ) : (
                 <Box p={3} mx={2} borderRadius={5} boxShadow={2}>
                     <Typography variant="h4">No more words</Typography>

@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import {Grid, Container, Box, Typography, CircularProgress} from "@material-ui/core";
 import axios from "axios";
+import utils from "../utils/utils";
 
 // components
-import utils from "../utils/utils";
-import Stats from "../components/Stats";
-import SingleChoice from "../components/SingleChoice";
-import Syllable from "../components/Syllable";
 import JsonToMarkdown from "../components/JsonToMarkdown";
-import AccentLetter from "../components/AccentLetter";
+import Stats from "../components/Stats";
+import Game1 from "../games/Game1";
+import Game2 from "../games/Game2";
+import Game3 from "../games/Game3";
 
 export default class SigleChoice extends Component {
     state = {
@@ -104,19 +104,19 @@ export default class SigleChoice extends Component {
         const {exercises, stats, game, current, error, loading} = this.state;
         const curEx = exercises[current]; // current exercise
         let gameRender = [
-            <SingleChoice
+            <Game1
                 sentence={curEx && curEx.sentence}
                 options={curEx && curEx.options}
                 correct={this.correct}
                 incorrect={this.incorrect}
             />,
-            <Syllable
+            <Game2
                 options={curEx && curEx.options}
                 correctIndex={curEx && curEx.correct}
                 correct={this.correct}
                 incorrect={this.incorrect}
             />,
-            <AccentLetter word={curEx && curEx.word} correct={this.correct} incorrect={this.error} />
+            <Game3 word={curEx && curEx.word} correct={this.correct} incorrect={this.error} />
         ];
         let explanation;
         if (this.state.content) {
