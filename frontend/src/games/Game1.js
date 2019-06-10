@@ -3,7 +3,7 @@ import {Grid, Box, Typography} from "@material-ui/core";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Paper from "../components/Paper";
-import utils from "../utils/utils";
+import {utils} from "../utils/utils";
 
 const SingleChoice = function({sentence, options, correct, incorrect}) {
     const theme = useTheme();

@@ -2,7 +2,7 @@ import React from "react";
 import {Grid, Box, Typography} from "@material-ui/core";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import utils from "../utils/utils";
+import {utils} from "../utils/utils";
 import Letter from "../components/Letter";
 
 export default function AccentLetter({word, correct, incorrect}) {

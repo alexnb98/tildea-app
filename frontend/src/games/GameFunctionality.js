@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Grid, Container, Box, Typography, CircularProgress} from "@material-ui/core";
 import axios from "axios";
-import utils from "../utils/utils";
+import {utils, nextLevel} from "../utils/utils";
 
 // components
 import JsonToMarkdown from "../components/JsonToMarkdown";
@@ -9,12 +9,14 @@ import Stats from "../components/Stats";
 import Game1 from "../games/Game1";
 import Game2 from "../games/Game2";
 import Game3 from "../games/Game3";
+import GameFeedback from "../components/GameFeedback";
+import dashboardLevels from "../utils/dashboardLevels";
 
 export default class SigleChoice extends Component {
     state = {
         game: null,
         exercises: [],
-        current: 0,
+        current: 5,
         stats: {
             correct: 0,
             incorrect: 0
@@ -26,8 +28,13 @@ export default class SigleChoice extends Component {
     };
 
     componentDidMount() {
+        this.handleRequest(this.props.match.url);
+    }
+
+    handleRequest = url => {
+        this.setState({loading: true});
         axios
-            .get(`/api${this.props.match.url}`)
+            .get(`/api${url}`)
             .then(({data}) => {
                 if (data.content) {
                     this.setState({
@@ -46,7 +53,7 @@ export default class SigleChoice extends Component {
                     this.setState({loading: false, error: err.response.data});
                 }
             });
-    }
+    };
 
     nextTask = () => {
         this.setState(state => {
@@ -100,6 +107,21 @@ export default class SigleChoice extends Component {
         }
     };
 
+    resetState = () => {
+        this.setState({current: 0, stats: {correct: 0, incorrect: 0}});
+    };
+
+    handleRepeat = () => {
+        this.resetState();
+    };
+
+    handleNextLevel = () => {
+        this.resetState();
+        const url = nextLevel(this.props.match.url, dashboardLevels);
+        this.props.history.push(url);
+        this.handleRequest(url);
+    };
+
     render() {
         const {exercises, stats, game, current, error, loading} = this.state;
         const curEx = exercises[current]; // current exercise
@@ -132,18 +154,26 @@ export default class SigleChoice extends Component {
                     <React.Fragment>
                         {explanation}
                         {exercises.length && current < exercises.length ? (
-                            <React.Fragment>{gameRender[game]}</React.Fragment>
+                            <React.Fragment>
+                                {gameRender[game]}
+                                <Stats
+                                    correct={stats.correct}
+                                    incorrect={stats.incorrect}
+                                    missing={exercises.length - current}
+                                />
+                            </React.Fragment>
                         ) : (
                             <Box my={5}>
-                                <Typography variant="h2" align="center">
-                                    Felicitaciones, completaste el nivel!
-                                </Typography>
+                                <GameFeedback
+                                    correct={stats.correct}
+                                    incorrect={stats.incorrect}
+                                    total={exercises.length}
+                                    repeat={this.handleRepeat}
+                                    next={this.handleNextLevel}
+                                />
                             </Box>
                         )}
                     </React.Fragment>
-                )}
-                {loading || error ? null : (
-                    <Stats correct={stats.correct} incorrect={stats.incorrect} missing={exercises.length - current} />
                 )}
             </Container>
         );
