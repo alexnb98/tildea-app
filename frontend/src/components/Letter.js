@@ -1,22 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import {Box} from "@material-ui/core";
 
-const Letter = props => {
+const Letter = ({letter, click, isMobile}) => {
     return (
-            <span 
-                className="display-1 text-center px-3 pb-3 d-inline-block"
-                style={{cursor: 'pointer',}} 
-                id="letter" 
-                onClick={props.onClick}>
-                {props.children}
-            </span>
-    )
-}
-
-Letter.propTypes = {
-    accent: PropTypes.string,
-    value: PropTypes.string,
-    onClick: PropTypes.func,
-}
+        <Box onClick={click} p={2} fontSize={30} mx={1} boxShadow={2} borderRadius={8}>
+            {letter}
+        </Box>
+    );
+};
 
 export default Letter;
