@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Box} from "@material-ui/core";
 
 const Letter = ({letter, click, isMobile}) => {
@@ -8,12 +7,6 @@ const Letter = ({letter, click, isMobile}) => {
             {letter}
         </Box>
     );
-};
-
-Letter.propTypes = {
-    accent: PropTypes.string,
-    value: PropTypes.string,
-    onClick: PropTypes.func
 };
 
 export default Letter;
