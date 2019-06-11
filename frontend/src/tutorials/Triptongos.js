@@ -2,7 +2,7 @@ import React from "react";
 import {Container, Box, Button, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
-export default function Diptongos() {
+export default function Triptongos() {
     const styles = {
         indentOne: {marginLeft: "2rem"},
         indentTwo: {marginLeft: "4rem"}
