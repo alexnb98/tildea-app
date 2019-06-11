@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import GameFunctionality from "./games/GameFunctionality";
+import dashboardLevels from "./utils/dashboardLevels";
 
 function Loading({pastDelay, error}) {
     return (
@@ -54,11 +55,10 @@ const App = () => {
                     <Route path="/diptongos/tutorial" component={Diptongos} />
                     <Route path="/triptongos/tutorial" component={Triptongos} />
                     <Route path="/hiatos/tutorial" component={Hiatos} />
-                    {/* exercises */}
-                    <Route path="/silaba-tonica/:id" component={GameFunctionality} />
-                    <Route path="/agudas/:id" component={GameFunctionality} />
-                    <Route path="/tilde-diacrica/:id" component={GameFunctionality} />
-                    <Route path="/acento/:id" component={GameFunctionality} />
+                    {/* exercises -> path = /agudas/1 */}
+                    {dashboardLevels.map((topic, index) => {
+                        return <Route key={index} path={`/${topic.link}/:id`} component={GameFunctionality} />;
+                    })}
                 </Switch>
             </ThemeProvider>
         </Router>
