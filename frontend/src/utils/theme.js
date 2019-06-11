@@ -35,6 +35,8 @@ export const globalStyles = makeStyles({
                 color: "#fff",
                 borderBottom: "2px #000 solid"
             }
-        }
+        },
+        ".indentOne": {marginLeft: "2rem"},
+        ".indentTwo": {marginLeft: "4rem"}
     }
 });
