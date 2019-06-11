@@ -16,7 +16,7 @@ export default class SigleChoice extends Component {
     state = {
         game: null,
         exercises: [],
-        current: 5,
+        current: 0,
         stats: {
             correct: 0,
             incorrect: 0
@@ -119,7 +119,7 @@ export default class SigleChoice extends Component {
         this.resetState();
         const url = nextLevel(this.props.match.url, dashboardLevels);
         this.props.history.push(url);
-        this.handleRequest(url);
+        if (!url.includes("tutorial")) this.handleRequest(url);
     };
 
     render() {
