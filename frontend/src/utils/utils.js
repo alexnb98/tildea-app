@@ -1,3 +1,5 @@
+import curriculum from "./curriculum";
+
 export const correctClass = "correct";
 export const incorrectClass = "incorrect";
 
@@ -6,7 +8,7 @@ export const classToggle = (e, color) => {
 };
 
 export const toggleThisWordsAccent = e => {
-    e.target.textContent = this.toggleAccent(e.target.textContent);
+    e.target.textContent = toggleAccent(e.target.textContent);
 };
 
 export const fromAccentToNormal = letter => {
@@ -82,16 +84,16 @@ export const hasAccent = letter => {
 };
 
 export const toggleAccent = letter => {
-    if (this.hasAccent(letter)) {
-        return this.fromAccentToNormal(letter);
+    if (hasAccent(letter)) {
+        return fromAccentToNormal(letter);
     }
-    return this.fromNormalToAccent(letter);
+    return fromNormalToAccent(letter);
 };
 
 export const getAccentIndex = word => {
     if (!word) return null;
     for (let i = 0; i < word.length; i++) {
-        if (this.hasAccent(word[i])) {
+        if (hasAccent(word[i])) {
             return i;
         }
     }
@@ -101,8 +103,8 @@ export const getAccentIndex = word => {
 export const removeAccent = word => {
     if (!word) return null;
     for (let i = 0; i < word.length; i++) {
-        if (this.hasAccent(word[i])) {
-            return this.toggleAccent(word[i]);
+        if (hasAccent(word[i])) {
+            return toggleAccent(word[i]);
         }
     }
     return word;
@@ -116,17 +118,16 @@ export const fisherYatesShuffle = (arr = []) => {
     return arr;
 };
 
-export const nextLevel = (url, dashboardLevels) => {
-    // ? this logic determines the next level
+export const nextLevel = url => {
+    // ? determines the next level
     const [, topic, level] = url.split("/"); // ["", "topic", "level"]
     let nextTopic = topic;
     let nextLevel = 1;
-    // ? if the current level is "start", we continue with the default values
-    const topicIndex = dashboardLevels.findIndex(el => el.link === topic);
-    if (level >= dashboardLevels[topicIndex].levels.length - 1) {
+    const topicIndex = curriculum.findIndex(el => el.link === topic);
+    if (level >= curriculum[topicIndex].levels.length - 1) {
         // ? this was the last level on this topic, move to next topic
-        nextTopic = dashboardLevels[topicIndex + 1].link;
-        nextLevel = "tutorial";
+        nextTopic = curriculum[topicIndex + 1].link;
+        nextLevel = curriculum[topicIndex + 1].levels[0];
     } else {
         // ? this means there are more levels in the same topic
         nextLevel = +level + 1;

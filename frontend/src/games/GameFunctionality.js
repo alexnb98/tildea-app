@@ -9,7 +9,6 @@ import Game1 from "../games/Game1";
 import Game2 from "../games/Game2";
 import Game3 from "../games/Game3";
 import GameFeedback from "../components/GameFeedback";
-import dashboardLevels from "../utils/dashboardLevels";
 
 export default class SigleChoice extends Component {
     state = {
@@ -31,7 +30,6 @@ export default class SigleChoice extends Component {
     }
 
     handleRequest = url => {
-        this.setState({loading: true});
         axios
             .get(`/api${url}`)
             .then(({data}) => {
@@ -108,17 +106,16 @@ export default class SigleChoice extends Component {
         }
     };
 
-    resetState = () => {
-        this.setState({current: 0, stats: {correct: 0, incorrect: 0}});
-    };
-
-    handleRepeat = () => {
-        this.resetState();
+    repeatLevel = () => {
+        this.setState(state => {
+            const exercises = fisherYatesShuffle(state.exercises);
+            return {exercises, current: 0, stats: {correct: 0, incorrect: 0}};
+        });
     };
 
     handleNextLevel = () => {
-        this.resetState();
-        const url = nextLevel(this.props.match.url, dashboardLevels);
+        this.setState({loading: true, current: 0, stats: {correct: 0, incorrect: 0}});
+        const url = nextLevel(this.props.match.url);
         this.props.history.push(url);
         if (!url.includes("tutorial")) this.handleRequest(url);
     };
@@ -163,7 +160,7 @@ export default class SigleChoice extends Component {
                                     <Stats
                                         correct={stats.correct}
                                         incorrect={stats.incorrect}
-                                        missing={exercises.length - current}
+                                        missing={exercises.length - current - 1}
                                     />
                                 </Box>
                             </React.Fragment>
@@ -173,7 +170,7 @@ export default class SigleChoice extends Component {
                                     correct={stats.correct}
                                     incorrect={stats.incorrect}
                                     total={exercises.length}
-                                    repeat={this.handleRepeat}
+                                    repeat={this.repeatLevel}
                                     next={this.handleNextLevel}
                                 />
                             </Box>

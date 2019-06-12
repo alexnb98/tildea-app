@@ -1,23 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
     Container,
     AppBar,
     Toolbar,
-    Typography,
-    Hidden,
-    IconButton,
-    Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
     Link as MuiLink
+    // Box,
+    // Hidden,
+    // IconButton,
+    // Drawer,
+    // List,
+    // ListItem,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import {makeStyles} from "@material-ui/core/styles";
+// import MenuIcon from "@material-ui/icons/Menu";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -31,51 +27,46 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Navbar = props => {
+const Navbar = () => {
     const classes = useStyles();
-    const [state, setState] = React.useState({
-        open: false
-    });
+    // const [state, setState] = React.useState({
+    //     open: false
+    // });
 
-    const toggleDrawer = open => event => {
-        if (
-            event.type === "keydown" &&
-            (event.key === "Tab" || event.key === "Shift")
-        ) {
-            return;
-        }
+    // const toggleDrawer = open => event => {
+    //     if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+    //         return;
+    //     }
 
-        setState({ ...state, open });
-    };
+    //     setState({...state, open});
+    // };
     return (
         <nav className={classes.root}>
             <AppBar position="static">
                 <Container maxWidth="md">
                     <Toolbar>
-                        <Hidden smUp>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="Menu"
-                                onClick={toggleDrawer(true)}
-                            >
+                        {/* <Hidden smUp>
+                            <IconButton edge="start" color="inherit" aria-label="Menu" onClick={toggleDrawer(true)}>
                                 <MenuIcon />
                             </IconButton>
-                        </Hidden>
-                        <Typography variant="h6" className={classes.title}>
-                            Tildea
-                        </Typography>
+                        </Hidden> */}
                         <MuiLink
-                            color="textSecondary"
+                            underline="none"
+                            color="inherit"
+                            variant="h6"
+                            className={classes.title}
                             component={Link}
-                            to="/dashboard"
+                            to="/"
                         >
-                            Dashboard
+                            Tildea
+                        </MuiLink>
+                        <MuiLink variant="subtitle1" color="inherit" component={Link} to="/ejercicios">
+                            Ejercicios
                         </MuiLink>
                     </Toolbar>
                 </Container>
             </AppBar>
-            <Drawer open={state.open} onClose={toggleDrawer(false)}>
+            {/* <Drawer open={state.open} onClose={toggleDrawer(false)}>
                 <div
                     className={classes.list}
                     role="presentation"
@@ -83,23 +74,16 @@ const Navbar = props => {
                     onKeyDown={toggleDrawer(false)}
                 >
                     <List>
-                        {["Inbox", "Starred", "Send email", "Drafts"].map(
-                            (text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? (
-                                            <InboxIcon />
-                                        ) : (
-                                            <MailIcon />
-                                        )}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            )
-                        )}
+                        <ListItem button>
+                            <Box mx={5}>
+                                <MuiLink variant="h5" color="textPrimary" component={Link} to="/ejercicios">
+                                    Ejercicios
+                                </MuiLink>
+                            </Box>
+                        </ListItem>
                     </List>
                 </div>
-            </Drawer>
+            </Drawer> */}
         </nav>
     );
 };

@@ -10,9 +10,9 @@ import {CircularProgress, Grid, Box, Typography} from "@material-ui/core";
 // Components
 import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
-import Dashboard from "./pages/Dashboard";
+import AllExercises from "./pages/AllExercises";
 import GameFunctionality from "./games/GameFunctionality";
-import dashboardLevels from "./utils/dashboardLevels";
+import curriculum from "./utils/curriculum";
 
 function Loading({pastDelay, error}) {
     return (
@@ -44,7 +44,7 @@ const App = () => {
                 <Navbar />
                 <Switch>
                     <Route path="/" exact component={Landing} />
-                    <Route path="/dashboard/" component={Dashboard} />
+                    <Route path="/ejercicios/" component={AllExercises} />
                     {/* tutorials */}
                     <Route path="/silaba-tonica/tutorial" component={SilabaTonica} />
                     <Route path="/agudas/tutorial" component={Agudas} />
@@ -56,7 +56,7 @@ const App = () => {
                     <Route path="/triptongos/tutorial" component={Triptongos} />
                     <Route path="/hiatos/tutorial" component={Hiatos} />
                     {/* exercises -> path = /agudas/1 */}
-                    {dashboardLevels.map((topic, index) => {
+                    {curriculum.map((topic, index) => {
                         return <Route key={index} path={`/${topic.link}/:id`} component={GameFunctionality} />;
                     })}
                 </Switch>
