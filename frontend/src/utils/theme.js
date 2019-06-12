@@ -31,9 +31,10 @@ export const globalStyles = makeStyles({
             borderBottom: "2px transparent solid",
             padding: "6px 0px",
             textDecoration: "none",
+            fontSize: "1rem",
             "&:hover": {
                 color: "#fff",
-                borderBottom: "2px #000 solid"
+                borderBottom: "2px #fff solid"
             }
         }
     }

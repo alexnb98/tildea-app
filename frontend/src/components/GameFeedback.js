@@ -2,10 +2,10 @@ import React from "react";
 import {Grid, Box, Button, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
-const GameFeedback = function({correct, incorrect, total, next, repeat, history}) {
+const GameFeedback = function({correct, incorrect, total, next, repeat}) {
     const style = {margin: "1rem"};
-    const percentCorrect = correct > 0 ? `${((correct / total) * 100).toFixed()}%` : "";
-    const percentIncorrect = incorrect > 0 ? `${((incorrect / total) * 100).toFixed()}%` : "";
+    const percentCorrect = `${((correct / total) * 100).toFixed()}%`;
+    const percentIncorrect = `${((incorrect / total) * 100).toFixed()}%`;
     return (
         <Box my={10}>
             <Typography align="center" variant="h2">
@@ -43,13 +43,13 @@ const GameFeedback = function({correct, incorrect, total, next, repeat, history}
                 </Button>
                 <Button
                     component={Link}
-                    to={"/dashboard"}
+                    to={"/ejercicios"}
                     style={style}
                     size="large"
                     variant="contained"
                     color="secondary"
                 >
-                    Dashboard
+                    Ejercicios
                 </Button>
                 <Button onClick={next} style={style} size="large" variant="contained" color="primary">
                     Continuar
