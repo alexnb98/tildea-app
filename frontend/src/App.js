@@ -13,6 +13,7 @@ import Landing from "./pages/Landing";
 import AllExercises from "./pages/AllExercises";
 import GameFunctionality from "./games/GameFunctionality";
 import curriculum from "./utils/curriculum";
+import NotFound from './pages/NotFound'
 
 function Loading({pastDelay, error}) {
     return (
@@ -59,6 +60,7 @@ const App = () => {
                     {curriculum.map((topic, index) => {
                         return <Route key={index} path={`/${topic.link}/:id`} component={GameFunctionality} />;
                     })}
+                    <Route component={NotFound}/>
                 </Switch>
             </ThemeProvider>
         </Router>
