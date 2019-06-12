@@ -1,5 +1,6 @@
 module.exports = {
     game: 0,
+    sentence: "Escoje la escritura correcta",
     exercises: [
         {
             id: 1,

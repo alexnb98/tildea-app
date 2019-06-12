@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Box, Typography} from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Paper from "../components/Paper";
@@ -9,7 +9,7 @@ export default function Syllable({options, correctIndex, correct, incorrect}) {
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
-        <Grid container justify="center" alignItems="center" style={{minHeight: "50vh"}}>
+        <React.Fragment>
             {options ? (
                 options.map((syllable, i) => (
                     <Paper
@@ -24,6 +24,6 @@ export default function Syllable({options, correctIndex, correct, incorrect}) {
                     <Typography variant="h4">No more words</Typography>
                 </Box>
             )}
-        </Grid>
+        </React.Fragment>
     );
 }

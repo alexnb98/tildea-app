@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Box, Typography} from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {utils} from "../utils/utils";
@@ -9,7 +9,7 @@ export default function AccentLetter({word, correct, incorrect}) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     return (
-        <Grid container justify="center" alignItems="center" style={{minHeight: "50vh"}}>
+        <React.Fragment>
             {word ? (
                 word.split("").map((letter, i) => {
                     if (i === utils.getAccentIndex(word)) {
@@ -24,6 +24,6 @@ export default function AccentLetter({word, correct, incorrect}) {
                     <Typography variant="h4">No more words</Typography>
                 </Box>
             )}
-        </Grid>
+        </React.Fragment>
     );
 }

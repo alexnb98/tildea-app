@@ -1,5 +1,6 @@
 module.exports = {
     game: 1,
+    sentence: "Escoje la silaba tónica",
     exercises: [
         {options: ["Pre", "gun", "ta"], correct: 1},
         {options: ["A", "mis", "tad"], correct: 2},

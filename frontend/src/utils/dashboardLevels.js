@@ -1,6 +1,6 @@
 export default [
     {
-        title: "Silaba Tonica",
+        title: "Silaba Tónica",
         link: "silaba-tonica",
         levels: ["tutorial", 1]
     },
@@ -10,9 +10,9 @@ export default [
         link: "graves",
         levels: ["tutorial", 1]
     },
-    {title: "Esdrujulas", link: "esdrujulas", levels: ["tutorial", 1]},
+    {title: "Esdrújulas", link: "esdrujulas", levels: ["tutorial", 1]},
     {
-        title: "Sobreesdrujulas",
+        title: "Sobreesdrújulas",
         link: "sobreesdrujulas",
         levels: ["tutorial", 1]
     },
