@@ -4,7 +4,6 @@ import axios from "axios";
 import {utils, nextLevel} from "../utils/utils";
 
 // components
-import JsonToMarkdown from "../components/JsonToMarkdown";
 import Stats from "../components/Stats";
 import Game1 from "../games/Game1";
 import Game2 from "../games/Game2";
@@ -36,12 +35,12 @@ export default class SigleChoice extends Component {
         axios
             .get(`/api${url}`)
             .then(({data}) => {
-                if (data.content) {
+                if (data.sentence) {
                     this.setState({
                         exercises: data.exercises,
                         game: data.game,
-                        content: data.content,
-                        loading: false
+                        loading: false,
+                        sentence: data.sentence
                     });
                 } else {
                     this.setState({exercises: data.exercises, game: data.game, loading: false});
@@ -126,12 +125,7 @@ export default class SigleChoice extends Component {
         const {exercises, stats, game, current, error, loading} = this.state;
         const curEx = exercises[current]; // current exercise
         let gameRender = [
-            <Game1
-                sentence={curEx && curEx.sentence}
-                options={curEx && curEx.options}
-                correct={this.correct}
-                incorrect={this.incorrect}
-            />,
+            <Game1 options={curEx && curEx.options} correct={this.correct} incorrect={this.incorrect} />,
             <Game2
                 options={curEx && curEx.options}
                 correctIndex={curEx && curEx.correct}
@@ -140,10 +134,11 @@ export default class SigleChoice extends Component {
             />,
             <Game3 word={curEx && curEx.word} correct={this.correct} incorrect={this.error} />
         ];
-        let explanation;
-        if (this.state.content) {
-            explanation = <JsonToMarkdown content={this.state.content} />;
-        }
+
+        let sentence = "Escoje la escritura correcta";
+        if (this.state.sentence) sentence = this.state.sentence;
+        if (curEx && curEx.sentence) sentence = curEx.sentence;
+
         return (
             <Container maxWidth="md">
                 {loading || error ? (
@@ -152,15 +147,23 @@ export default class SigleChoice extends Component {
                     </Grid>
                 ) : (
                     <React.Fragment>
-                        {explanation}
                         {exercises.length && current < exercises.length ? (
                             <React.Fragment>
-                                {gameRender[game]}
-                                <Stats
-                                    correct={stats.correct}
-                                    incorrect={stats.incorrect}
-                                    missing={exercises.length - current}
-                                />
+                                <Box boxShadow={2} mt="15vh" mb="10vh" p={2} borderRadius={8}>
+                                    <Typography variant="h2" align="center">
+                                        {sentence}
+                                    </Typography>
+                                </Box>
+                                <Grid container justify="center">
+                                    {gameRender[game]}
+                                </Grid>
+                                <Box mt="10vh">
+                                    <Stats
+                                        correct={stats.correct}
+                                        incorrect={stats.incorrect}
+                                        missing={exercises.length - current}
+                                    />
+                                </Box>
                             </React.Fragment>
                         ) : (
                             <Box my={5}>

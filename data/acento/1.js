@@ -1,5 +1,6 @@
 module.exports = {
     game: 2,
+    sentence: "Haz click sobre la letra que debe ser acentuada",
     exercises: [
         {
             id: 1,
