@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Grid, Container, Box, Typography, CircularProgress} from "@material-ui/core";
 import axios from "axios";
-import {utils, nextLevel} from "../utils/utils";
+import {correctClass, incorrectClass, nextLevel, fisherYatesShuffle} from "../utils/utils";
 
 // components
 import Stats from "../components/Stats";
@@ -35,22 +35,24 @@ export default class SigleChoice extends Component {
         axios
             .get(`/api${url}`)
             .then(({data}) => {
+                const exercises = fisherYatesShuffle(data.exercises);
                 if (data.sentence) {
                     this.setState({
-                        exercises: data.exercises,
+                        exercises,
                         game: data.game,
                         loading: false,
                         sentence: data.sentence
                     });
                 } else {
-                    this.setState({exercises: data.exercises, game: data.game, loading: false});
+                    this.setState({exercises, game: data.game, loading: false});
                 }
             })
             .catch(err => {
                 console.log({...err});
                 if (err.response) {
-                    this.setState({loading: false, error: err.response.data});
+                    return this.setState({loading: false, error: err.response.data});
                 }
+                return this.setState({loading: false, error: "Algo salio mal :( Intenta más tarde."});
             });
     };
 
@@ -66,11 +68,11 @@ export default class SigleChoice extends Component {
                 return {stats: {...state.stats, correct: state.stats.correct + 1}, disable: true};
             });
             const current = e.currentTarget;
-            current.classList.add(utils.correct);
+            current.classList.add(correctClass);
             setTimeout(() => {
-                current.classList.remove(utils.correct);
+                current.classList.remove(correctClass);
                 if (this.state.elements.length) {
-                    this.state.elements.forEach(el => el.classList.remove(utils.incorrect));
+                    this.state.elements.forEach(el => el.classList.remove(incorrectClass));
                 }
                 this.nextTask();
             }, 1000);
@@ -84,9 +86,9 @@ export default class SigleChoice extends Component {
                 return {stats: {...state.stats, incorrect: state.stats.incorrect + 1}, disable: true};
             });
             const current = e.currentTarget;
-            current.classList.add(utils.incorrect);
+            current.classList.add(incorrectClass);
             setTimeout(() => {
-                current.classList.remove(utils.incorrect);
+                current.classList.remove(incorrectClass);
                 this.nextTask();
             }, 1000);
         }
@@ -102,7 +104,7 @@ export default class SigleChoice extends Component {
                     elements: [...state.elements, current]
                 };
             });
-            current.classList.add(utils.incorrect);
+            current.classList.add(incorrectClass);
         }
     };
 

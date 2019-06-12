@@ -2,7 +2,7 @@ import React, {memo} from "react";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Paper from "../components/Paper";
-import {utils} from "../utils/utils";
+import {fisherYatesShuffle} from "../utils/utils";
 
 const SingleChoice = function({options, correct, incorrect}) {
     const theme = useTheme();
@@ -12,7 +12,7 @@ const SingleChoice = function({options, correct, incorrect}) {
         if (index === 0) return <Paper click={correct} key={index} text={item} isMobile={isMobile} />;
         return <Paper click={incorrect} key={index} text={item} isMobile={isMobile} />;
     });
-    const shuffledOptions = utils.fisherYatesShuffle(optionItems);
+    const shuffledOptions = fisherYatesShuffle(optionItems);
     return <React.Fragment>{shuffledOptions}</React.Fragment>;
 };
 

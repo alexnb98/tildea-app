@@ -2,7 +2,7 @@ import React from "react";
 import {Box, Typography} from "@material-ui/core";
 import {useTheme} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import {utils} from "../utils/utils";
+import {getAccentIndex, toggleAccent} from "../utils/utils";
 import Letter from "../components/Letter";
 
 export default function AccentLetter({word, correct, incorrect}) {
@@ -12,10 +12,8 @@ export default function AccentLetter({word, correct, incorrect}) {
         <React.Fragment>
             {word ? (
                 word.split("").map((letter, i) => {
-                    if (i === utils.getAccentIndex(word)) {
-                        return (
-                            <Letter key={i} isMobile={isMobile} click={correct} letter={utils.toggleAccent(letter)} />
-                        );
+                    if (i === getAccentIndex(word)) {
+                        return <Letter key={i} isMobile={isMobile} click={correct} letter={toggleAccent(letter)} />;
                     }
                     return <Letter key={i} isMobile={isMobile} click={incorrect} letter={letter} />;
                 })
