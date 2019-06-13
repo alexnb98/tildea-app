@@ -31,4 +31,9 @@ router.get("/triptongos/1", (req, res) => res.json(require("../../data/triptongo
 //Hiatos
 router.get("/hiatos/1", (req, res) => res.json(require("../../data/hiatos/1")));
 
+router.use(function(req, res, next) {
+    res.status(404).send("Este nivel no existe");
+    next();
+});
+
 module.exports = router;
