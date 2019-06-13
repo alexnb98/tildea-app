@@ -30,3 +30,6 @@ build/Release
 node_modules
 
 config
+
+#VS Code settings
+.vscode
