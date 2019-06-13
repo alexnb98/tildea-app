@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Box, Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Container, Box, Typography} from "@material-ui/core";
+import TutorialButtons from "../components/TutorialButtons";
 
 export default function SilabaTonica() {
     const styles = {
@@ -39,19 +39,7 @@ export default function SilabaTonica() {
                 <Typography variant="body1">
                     De esta manera podemos saber cual es la silaba tónica con cualquier palabra.
                 </Typography>
-                <Button color="primary" variant="contained" size="large" component={Link} to="/silaba-tonica/1">
-                    Ejercicio 1
-                </Button>
-                <Button
-                    style={styles.indentOne}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    component={Link}
-                    to="/dashboard"
-                >
-                    Dashboard
-                </Button>
+                <TutorialButtons topic="silaba-tonica" />
             </Box>
         </Container>
     );

@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Box, Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Container, Box, Typography} from "@material-ui/core";
+import TutorialButtons from "../components/TutorialButtons";
 
 export default function TildeDiacritica() {
     const styles = {
@@ -20,19 +20,7 @@ export default function TildeDiacritica() {
                     Ejemplo: El carro es de él. Te prepare un té.
                 </Typography>
                 <Typography variant="body1">La tilde diacríta no sigue las reglas generales de acentuación.</Typography>
-                <Button color="primary" variant="contained" size="large" component={Link} to="/tilde-diacritica/1">
-                    Ejercicio 1
-                </Button>
-                <Button
-                    style={styles.indentOne}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    component={Link}
-                    to="/dashboard"
-                >
-                    Dashboard
-                </Button>
+                <TutorialButtons topic="tilde-diacritica" />
             </Box>
         </Container>
     );

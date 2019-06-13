@@ -22,4 +22,13 @@ router.get("/acento/1", (req, res) => res.json(require("../../data/acento/1")));
 //Tilde Diacritica
 router.get("/tilde-diacritica/1", (req, res) => res.json(require("../../data/tilde-diacritica/1")));
 
+//Diptongos
+router.get("/diptongos/1", (req, res) => res.json(require("../../data/diptongos/1")));
+
+//Triptongos
+router.get("/triptongos/1", (req, res) => res.json(require("../../data/triptongos/1")));
+
+//Hiatos
+router.get("/hiatos/1", (req, res) => res.json(require("../../data/hiatos/1")));
+
 module.exports = router;

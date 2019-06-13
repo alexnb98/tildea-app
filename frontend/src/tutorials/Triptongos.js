@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Box, Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Container, Box, Typography} from "@material-ui/core";
+import TutorialButtons from "../components/TutorialButtons";
 
 export default function Triptongos() {
     const styles = {
@@ -14,8 +14,7 @@ export default function Triptongos() {
                     El Triptongo
                 </Typography>
                 <Typography variant="body1">
-                    El triptongo se forma cuando tres vocales se juntan en la misma sílaba. Es una secuencia de las
-                    siguientes vocales:
+                    El triptongo se forma cuando tres vocales se juntan en la misma sílaba.
                 </Typography>
                 <Typography style={styles.indentOne} variant="body1">
                     Ejemplo: miau, copiáis
@@ -27,19 +26,7 @@ export default function Triptongos() {
                 <Typography style={styles.indentOne} variant="body1">
                     Ejemplo: Anunciáis, Cambiáis, Haliéutica
                 </Typography>
-                <Button color="primary" variant="contained" size="large" component={Link} to="/triptongos/1">
-                    Ejercicio 1
-                </Button>
-                <Button
-                    style={styles.indentOne}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    component={Link}
-                    to="/dashboard"
-                >
-                    Dashboard
-                </Button>
+                <TutorialButtons topic="triptongos" />
             </Box>
         </Container>
     );

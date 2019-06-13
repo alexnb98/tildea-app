@@ -24,18 +24,6 @@ export const globalStyles = makeStyles({
         ".incorrect": {
             background: red[600],
             color: "#fff"
-        },
-        ".nav-link": {
-            color: "#fff",
-            fontFamily: "Roboto",
-            borderBottom: "2px transparent solid",
-            padding: "6px 0px",
-            textDecoration: "none",
-            fontSize: "1rem",
-            "&:hover": {
-                color: "#fff",
-                borderBottom: "2px #fff solid"
-            }
         }
     }
 });

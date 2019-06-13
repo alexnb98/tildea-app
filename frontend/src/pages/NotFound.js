@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 export default function NotFound() {
     return (
         <Grid container justify="center" alignContent="center" style={{minHeight: "80vh"}}>
-            <Box>
+            <Box align="center">
                 <Typography variant="h1" align="center" gutterBottom>
                     Página no encontrada
                 </Typography>

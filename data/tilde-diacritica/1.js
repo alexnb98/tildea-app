@@ -38,7 +38,7 @@ module.exports = {
         },
         {
             id: 8,
-            sentence: "A __ me gustan las mujeres",
+            sentence: "A ___ no me gusta el fútbol",
             options: ["mí", "mi"]
         }
     ]

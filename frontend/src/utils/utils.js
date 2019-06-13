@@ -124,6 +124,7 @@ export const nextLevel = url => {
     let nextTopic = topic;
     let nextLevel = 1;
     const topicIndex = curriculum.findIndex(el => el.link === topic);
+    if (topicIndex === curriculum.length - 1) return "/ejercicios";
     if (level >= curriculum[topicIndex].levels.length - 1) {
         // ? this was the last level on this topic, move to next topic
         nextTopic = curriculum[topicIndex + 1].link;

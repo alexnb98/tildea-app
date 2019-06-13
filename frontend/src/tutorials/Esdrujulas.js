@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Box, Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Container, Box, Typography} from "@material-ui/core";
+import TutorialButtons from "../components/TutorialButtons";
 
 export default function Esdrujulas() {
     const styles = {
@@ -20,19 +20,7 @@ export default function Esdrujulas() {
                 <Typography style={styles.indentOne} variant="body1">
                     Ejemplo: rápido, análisis, espátula, éxtasis.
                 </Typography>
-                <Button color="primary" variant="contained" size="large" component={Link} to="/esdrujulas/1">
-                    Ejercicio 1
-                </Button>
-                <Button
-                    style={styles.indentOne}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    component={Link}
-                    to="/dashboard"
-                >
-                    Dashboard
-                </Button>
+                <TutorialButtons topic="esdrujulas" />
             </Box>
         </Container>
     );

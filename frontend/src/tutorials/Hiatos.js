@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Box, Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Container, Box, Typography} from "@material-ui/core";
+import TutorialButtons from "../components/TutorialButtons";
 
 export default function Hiatos() {
     const styles = {
@@ -42,20 +42,7 @@ export default function Hiatos() {
                 <Typography style={styles.indentTwo} variant="body1">
                     grave: geografía → geo-gra-fí-a
                 </Typography>
-
-                <Button color="primary" variant="contained" size="large" component={Link} to="/hiatos/1">
-                    Ejercicio 1
-                </Button>
-                <Button
-                    style={styles.indentOne}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    component={Link}
-                    to="/dashboard"
-                >
-                    Dashboard
-                </Button>
+                <TutorialButtons topic="hiatos" />
             </Box>
         </Container>
     );

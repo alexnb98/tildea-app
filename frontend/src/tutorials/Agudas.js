@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Box, Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Container, Box, Typography} from "@material-ui/core";
+import TutorialButtons from "../components/TutorialButtons";
 
 export default function Agudas() {
     const styles = {
@@ -20,23 +20,10 @@ export default function Agudas() {
                     Estas llevan tilde si terminan en vocal o consonantes "n" o "s" y no son precedidas por una
                     consonante, como sucede con la palabra "robots".
                 </Typography>
-                <Typography variant="body1">Asi es como la identificas:</Typography>
                 <Typography style={styles.indentOne} variant="body1">
                     Ejemplo: canción, correré, razón, compás, caminó
                 </Typography>
-                <Button color="primary" variant="contained" size="large" component={Link} to="/agudas/1">
-                    Ejercicio 1
-                </Button>
-                <Button
-                    style={styles.indentOne}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    component={Link}
-                    to="/dashboard"
-                >
-                    Dashboard
-                </Button>
+                <TutorialButtons topic="agudas" />
             </Box>
         </Container>
     );
