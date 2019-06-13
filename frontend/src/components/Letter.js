@@ -1,20 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from '../assets/css/Letter.module.css';
+import React from "react";
+import {Box, Typography} from "@material-ui/core";
 
-
-function Letter(props) {
+const Letter = ({letter, click, isMobile}) => {
     return (
-            <span className={`${styles.letter} display-1 display-sm-5 p-sm-2 p-0 text-center m-auto align-center`} onClick={props.onClick}>
-                {props.children}
-            </span>
-    )
-}
-
-Letter.propTypes = {
-    accent: PropTypes.string,
-    value: PropTypes.string,
-    onClick: PropTypes.func,
-}
+        <Box onClick={click} p={isMobile ? "10px" : 2} m={isMobile ? "5px" : 1} boxShadow={2} borderRadius={8}>
+            <Typography variant={isMobile ? "h5" : "h4"}>{letter}</Typography>
+        </Box>
+    );
+};
 
 export default Letter;
