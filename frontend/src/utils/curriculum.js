@@ -6,7 +6,7 @@ export default [
     },
     {title: "Agudas", link: "agudas", levels: ["tutorial", 1]},
     {
-        title: "Llanas o Graves",
+        title: "Graves",
         link: "graves",
         levels: ["tutorial", 1]
     },

@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
     const classes = useStyles();
+    // All comments are the components of a Drawer for Mobiles. Not yet necessary, but will in the future.
     // const [state, setState] = React.useState({
     //     open: false
     // });
