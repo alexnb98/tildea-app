@@ -5,15 +5,18 @@
     "main": "server.js",
     "scripts": {
         "server": "nodemon server",
-        "start": "node server.js"
+        "start": "node server.js",
+        "frontend": "npm start --prefix frontend",
+        "dev": "concurrently -r \"npm run server\" \"npm run frontend\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
     },
     "author": "Jesus Casal & Alexander Becker & Marcos Carbonell",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.1",
-        "mongoose": "^5.4.16"
+        "express": "^4.17.1"
     },
     "devDependencies": {
-        "nodemon": "^1.19.1"
+        "nodemon": "^1.19.1",
+        "concurrently": "^4.1.0"
     }
 }
