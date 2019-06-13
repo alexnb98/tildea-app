@@ -4,11 +4,6 @@ const app = express();
 // routes
 app.use("/api/", require("./routes/api/routes"));
 
-app.use(function(req, res, next) {
-    res.status(404).send("Se ha producido un error en el servidor, inténtelo de nuevo más tarde.");
-    next();
-});
-
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
     // Set static folder
