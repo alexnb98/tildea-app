@@ -1,4 +1,4 @@
-# tildea-react-app
+# tildea-app
 
 ## Workflow and Team Management
 
@@ -6,13 +6,4 @@ I made a Workflow guide on Notion, [check it out](https://www.notion.so/alexnb98
 
 Only use english inside the project!
 
-Wireframes and Flowcharts are made in whimsical.co 
-
-## CSS & Styles
-
-We will use CSS Modules. There is no need to use SASS.
-
-
-[CSS Module with create-react app tutorial](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet)
-=======
-
+Wireframeand Flowcharts are made in whimsical.co
